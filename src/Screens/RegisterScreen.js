@@ -33,7 +33,7 @@ function RegisterScreen() {
         <VStack space={6} pt="6">
           <Input
             InputLeftElement={
-              <FontAwesome name="user" size={24} color={Colors.main} />
+              <FontAwesome name="user " size={24} color={Colors.main} />
             }
             variant="underlined"
             placeholder="John Doe"

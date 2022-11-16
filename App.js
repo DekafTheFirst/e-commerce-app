@@ -7,7 +7,7 @@ import RegisterScreen from "./src/Screens/RegisterScreen";
 export default function App() {
   return (
     <NativeBaseProvider>
-      <NotVerifyScreen />
+      <HomeScreen />
     </NativeBaseProvider>
   );
 }
