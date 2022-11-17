@@ -1,8 +1,10 @@
-import { View, Text, Box, Heading } from "native-base";
+import { Text, Box, Heading, VStack, FormControl, Select } from "native-base";
+
 import React from "react";
 import Colors from "../color";
 import Message from "./Notifications/Message";
 import Rating from "./Rating";
+
 export default function Review() {
   return (
     <Box my={9}>
@@ -32,6 +34,25 @@ export default function Review() {
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pretium enim vitae tincidunt tempor. Ut ullamcorper aliquam ante, et semper risus iaculis sed."
           }
         />
+      </Box>
+
+      {/* WRITE REVIEW */}
+      <Box mt={6}>
+        <Heading fontSize={15} bold mb={4}>
+          REVIEW THIS PRODUCT
+        </Heading>
+        <VStack space={6}>
+          <FormControl>
+            <FormControl.Label
+              _text={{
+                fontSize: "12px",
+                fontWeight: "bold",
+              }}
+            >
+              Rating
+            </FormControl.Label>
+          </FormControl>
+        </VStack>
       </Box>
     </Box>
   );
