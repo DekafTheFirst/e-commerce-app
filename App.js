@@ -1,11 +1,11 @@
 import { StatusBar } from "expo-status-bar";
 import { NativeBaseProvider } from "native-base";
-import CartScreen from "./src/Screens/CartScreen";
+import PaymentScreen from "./src/Screens/PaymentScreen";
 
 export default function App() {
   return (
     <NativeBaseProvider>
-      <CartScreen />
+      <PaymentScreen />
     </NativeBaseProvider>
   );
 }
