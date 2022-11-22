@@ -86,7 +86,11 @@ function PaymentScreen() {
               CONTINUE
             </Buttone>
             <Text italic textAlign="center">
-              Payment method is <Text bold>Paypal</Text> by default
+              Payment method is{" "}
+              <Text italic bold>
+                Paypal
+              </Text>{" "}
+              by default
             </Text>
           </VStack>
         </ScrollView>
