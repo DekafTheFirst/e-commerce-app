@@ -1,5 +1,14 @@
 import { useNavigation } from "@react-navigation/native";
-import { Center, HStack, Modal, Text, VStack, Button } from "native-base";
+import {
+  Center,
+  HStack,
+  Modal,
+  Text,
+  VStack,
+  Button,
+  Pressable,
+  Image,
+} from "native-base";
 import React, { useState } from "react";
 import color from "../color";
 import Buttone from "../Components/Buttone";
@@ -27,7 +36,7 @@ const OrderInfos = [
   },
 ];
 
-const PlaceOrderModel = () => {
+const OrderModel = () => {
   const [showModel, setShowModel] = useState(false);
   const navigation = useNavigation();
 
@@ -36,7 +45,7 @@ const PlaceOrderModel = () => {
   };
 
   const closeTotalHandler = () => {
-    navigation.navigate("Order");
+    navigation.navigate("Home");
     setShowModel(false);
   };
 
@@ -44,11 +53,11 @@ const PlaceOrderModel = () => {
     <Center>
       <Buttone
         onPress={showTotalHandler}
-        bg={color.black}
+        bg={color.main}
         color={color.white}
         mt={5}
       >
-        SHOW TOTAL
+        SHOW PAYMENT & TOTAL
       </Buttone>
       <Modal isOpen={showModel} onClose={closeTotalHandler} size="lg">
         <Modal.Content maxWidth="350">
@@ -74,15 +83,33 @@ const PlaceOrderModel = () => {
             </VStack>
           </Modal.Body>
           <Modal.Footer>
+            <Pressable
+              w="full"
+              justifyContent="center"
+              bg={color.paypal}
+              h={45}
+              onPress={closeTotalHandler}
+              rounded={3}
+              overflow="hidden"
+            >
+              <Image
+                source={require("../../assets/paypal.png")}
+                alt="paypal"
+                resizeMode="contain"
+                w="full"
+                h={34}
+              />
+            </Pressable>
             <Button
-              flex={1}
-              bg={color.main}
+              w="full"
+              mt={2}
+              bg={color.black}
               h={45}
               _text={{ color: color.white }}
-              _pressed={{ bg: color.main }}
+              _pressed={{ bg: color.black }}
               onPress={closeTotalHandler}
             >
-              PLACE AN ORDER
+              PAY LATER
             </Button>
           </Modal.Footer>
         </Modal.Content>
@@ -91,4 +118,4 @@ const PlaceOrderModel = () => {
   );
 };
 
-export default PlaceOrderModel;
+export default OrderModel;

@@ -15,14 +15,24 @@ import Colors from "../color";
 import Rating from "../Components/Rating";
 import Buttone from "../Components/Buttone";
 import Review from "../Components/Review";
-function SingleProductScreen() {
+import { useNavigation } from "@react-navigation/native";
+
+function SingleProductScreen({ route }) {
   const [value, setValue] = useState(0);
+
+  const navigation = useNavigation();
+  const product = route.params;
+
+  function addCartHandler() {
+    navigation.navigate("Cart");
+  }
+
   return (
     <Box safeArea flex={1} bg={Colors.white}>
       <ScrollView px={5} showsVerticalScrollIndicator={false}>
         <Image
           source={{
-            uri: "https://www.pngplay.com/wp-content/uploads/13/Nissan-GT-R-Nismo-Transparent-Background.png",
+            uri: product.image,
           }}
           alt="Product Image"
           w="full"
@@ -30,39 +40,46 @@ function SingleProductScreen() {
           resizeMode="contain"
         />
         <Heading bold fontSize={15} mb={2} lineHeight={22}>
-          Nisan GT-R 2020 Edition
+          {product.name}
         </Heading>
-        <Rating value={4.5} />
+        <Rating value={product.rating} text={`${product.numReviews} reviews`} />
         <HStack space={2} alignItems="center" my={5}>
-          <NumericInput
-            value={value}
-            totalWidth={140}
-            totalHeight={30}
-            iconSize={25}
-            step={1}
-            maxValue={15}
-            minValue={0}
-            borderColor={Colors.deepGray}
-            rounded
-            onChange={() => {}}
-            textColor={Colors.black}
-            iconStyle={{ color: Colors.white }}
-            rightButtonBackgroundColor={Colors.main}
-            leftButtonBackgroundColor={Colors.main}
-          />
+          {product.countInStock > 0 ? (
+            <NumericInput
+              value={value}
+              totalWidth={140}
+              totalHeight={30}
+              iconSize={25}
+              step={1}
+              maxValue={product.countInStock}
+              minValue={0}
+              borderColor={Colors.deepGray}
+              rounded
+              onChange={() => {}}
+              textColor={Colors.black}
+              iconStyle={{ color: Colors.white }}
+              rightButtonBackgroundColor={Colors.main}
+              leftButtonBackgroundColor={Colors.main}
+            />
+          ) : (
+            <Heading bold color={Colors.red} fontSize={12}>
+              Out of Stock
+            </Heading>
+          )}
           <Spacer />
           <Heading bold color={Colors.black} fontSize={19}>
-            ₱400
+            {product.price}
           </Heading>
         </HStack>
         <Text lineHeight={24} fontSize={12}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-          pretium enim vitae tincidunt tempor. Ut ullamcorper aliquam ante, et
-          semper risus iaculis sed. Aenean sit amet ex urna. Pellentesque
-          ultrices sodales neque, id efficitur enim ullamcorper at. Nulla ipsum
-          nunc.
+          {product.description}
         </Text>
-        <Buttone bg={Colors.main} color={Colors.white} mt={10}>
+        <Buttone
+          bg={Colors.main}
+          color={Colors.white}
+          mt={10}
+          onPress={addCartHandler}
+        >
           ADD TO CART
         </Buttone>
         <Review />

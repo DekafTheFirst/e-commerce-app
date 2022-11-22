@@ -11,6 +11,7 @@ import {
 } from "native-base";
 import Colors from "../color";
 import Buttone from "../Components/Buttone";
+import { useNavigation } from "@react-navigation/native";
 
 const ShippingInputs = [
   { label: "CITY", type: "text" },
@@ -20,6 +21,12 @@ const ShippingInputs = [
 ];
 
 function ShippingScreen() {
+  const navigation = useNavigation();
+
+  function checkoutHandler() {
+    navigation.navigate("Checkout");
+  }
+
   return (
     <Box flex={1} safeArea bg={Colors.main} py={5}>
       <Center pb={15}>
@@ -56,7 +63,11 @@ function ShippingScreen() {
                 />
               </FormControl>
             ))}
-            <Buttone bg={Colors.main} color={Colors.white}>
+            <Buttone
+              bg={Colors.main}
+              color={Colors.white}
+              onPress={checkoutHandler}
+            >
               CONTINUE
             </Buttone>
           </VStack>

@@ -13,7 +13,14 @@ import {
 import Colors from "../color";
 import { MaterialIcons, Ionicons, FontAwesome } from "@expo/vector-icons";
 
-function RegisterScreen() {
+function RegisterScreen({ navigation }) {
+  const navigationRegisterHandler = () => {
+    navigation.navigate("Bottom");
+  };
+  const navigationLoginHandler = () => {
+    navigation.navigate("Login");
+  };
+
   return (
     <Box flex={1} bg={Colors.black}>
       <Image
@@ -33,7 +40,7 @@ function RegisterScreen() {
         <VStack space={6} pt="6">
           <Input
             InputLeftElement={
-              <FontAwesome name="user " size={24} color={Colors.main} />
+              <FontAwesome name="user" size={24} color={Colors.main} />
             }
             variant="underlined"
             placeholder="John Doe"
@@ -77,10 +84,11 @@ function RegisterScreen() {
           _text={{
             color: Colors.white,
           }}
+          onPress={navigationRegisterHandler}
         >
           SIGN UP
         </Button>
-        <Pressable mt={4}>
+        <Pressable mt={4} onPress={navigationLoginHandler}>
           <Text color={Colors.deepestGray}>LOGIN</Text>
         </Pressable>
       </Box>

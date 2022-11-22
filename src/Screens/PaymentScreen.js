@@ -13,6 +13,7 @@ import {
   Spacer,
 } from "native-base";
 import { Ionicons, FontAwesome } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 import Colors from "../color";
 import Buttone from "../Components/Buttone";
@@ -36,6 +37,12 @@ const PaymentMethods = [
 ];
 
 function PaymentScreen() {
+  const navigation = useNavigation();
+
+  function paymentHandler() {
+    navigation.navigate("Placeorder");
+  }
+
   return (
     <Box flex={1} safeArea bg={Colors.main} py={5}>
       <Center pb={15}>
@@ -82,7 +89,11 @@ function PaymentScreen() {
               </HStack>
             ))}
 
-            <Buttone bg={Colors.main} color={Colors.white}>
+            <Buttone
+              bg={Colors.main}
+              color={Colors.white}
+              onPress={paymentHandler}
+            >
               CONTINUE
             </Buttone>
             <Text italic textAlign="center">

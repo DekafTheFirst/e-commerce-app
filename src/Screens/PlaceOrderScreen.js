@@ -1,8 +1,9 @@
 import React from "react";
 import { Box, Heading, ScrollView } from "native-base";
+import { FontAwesome, FontAwesome5, Ionicons } from "@expo/vector-icons";
+
 import color from "../color";
 import OrderInfo from "../Components/OrderInfo";
-import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 import OrderItem from "../Components/OrderItem";
 import PlaceOrderModel from "../Components/PlaceOrderModel";
 
@@ -18,8 +19,8 @@ function PlaceOrderScreen() {
             icon={<FontAwesome name="user" size={30} color={color.white} />}
           />
           <OrderInfo
-            title="ORDER INFO"
-            subTitle="shipping: cebu, Philippines"
+            title="SHIPPING INFO"
+            subTitle="shipping: Cebu, Philippines"
             text="payment method: Paypal"
             icon={
               <FontAwesome5
@@ -27,6 +28,14 @@ function PlaceOrderScreen() {
                 size={30}
                 color={color.white}
               />
+            }
+          />
+          <OrderInfo
+            title="DELIVER TO"
+            subTitle="Address:"
+            text="054 Santa monica st. Cebu city, Cebu"
+            icon={
+              <Ionicons name="location-sharp" size={30} color={color.white} />
             }
           />
         </ScrollView>
