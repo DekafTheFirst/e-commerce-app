@@ -10,26 +10,30 @@ import BottomNav from "./src/Components/Navigation/BottomNav";
 
 import PaymentScreen from "./src/Screens/PaymentScreen";
 import PlaceOrderScreen from "./src/Screens/PlaceOrderScreen";
+import { AuthenticationContextProvider } from "./Services/Authentication/authentiation.context";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <NativeBaseProvider>
-      <NavigationContainer>
-        <StatusBar hidden={true} />
-        <Stack.Navigator
-          initialRouteName="Login"
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="Register" component={RegisterScreen} />
-          <Stack.Screen name="Order" component={OrderScreen} />
-          <Stack.Screen name="Bottom" component={BottomNav} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </NativeBaseProvider>
+    <AuthenticationContextProvider>
+      <NativeBaseProvider>
+        <NavigationContainer>
+          <StatusBar hidden={false} />
+
+          <Stack.Navigator
+            initialRouteName="Bottom"
+            screenOptions={{
+              headerShown: false,
+            }}
+          >
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Register" component={RegisterScreen} />
+            <Stack.Screen name="Order" component={OrderScreen} />
+            <Stack.Screen name="Bottom" component={BottomNav} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </NativeBaseProvider>
+    </AuthenticationContextProvider>
   );
 }

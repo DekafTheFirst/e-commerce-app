@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import {
   Text,
   View,
@@ -12,21 +12,22 @@ import {
 } from "native-base";
 import Colors from "../color";
 import { MaterialIcons, Ionicons, FontAwesome } from "@expo/vector-icons";
+import { AuthenticationContext } from "../../Services/Authentication/authentiation.context";
 
 function RegisterScreen({ navigation }) {
-  const navigationRegisterHandler = () => {
-    navigation.navigate("Bottom");
-  };
-  const navigationLoginHandler = () => {
-    navigation.navigate("Login");
-  };
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [repeatedPassword, setRepeatedPassword] = useState("");
+
+  const { onRegister, error } = useContext(AuthenticationContext);
 
   return (
     <Box flex={1} bg={Colors.black}>
       <Image
         flex={1}
         alt="Logo"
-        source={require("../../assets/login-background.jpg")}
+        source={require("../../assets/register-background.png")}
       />
       <Box
         w="full"
@@ -47,6 +48,7 @@ function RegisterScreen({ navigation }) {
             w="70%"
             pl={2}
             color={Colors.main}
+            onChangeText={(text) => setUsername(text)}
             borderBottomColor={Colors.underline}
           />
           <Input
@@ -58,6 +60,7 @@ function RegisterScreen({ navigation }) {
             w="70%"
             pl={2}
             color={Colors.main}
+            onChangeText={(text) => setEmail(text)}
             borderBottomColor={Colors.underline}
           />
           <Input
@@ -70,6 +73,21 @@ function RegisterScreen({ navigation }) {
             w="70%"
             pl={2}
             color={Colors.main}
+            onChangeText={(text) => setPassword(text)}
+            borderBottomColor={Colors.underline}
+          />
+
+          <Input
+            InputLeftElement={
+              <Ionicons name="eye" size={24} color={Colors.main} />
+            }
+            variant="underlined"
+            placeholder="**********"
+            type="password"
+            w="70%"
+            pl={2}
+            color={Colors.main}
+            onChangeText={(text) => setRepeatedPassword(text)}
             borderBottomColor={Colors.underline}
           />
         </VStack>
@@ -84,11 +102,13 @@ function RegisterScreen({ navigation }) {
           _text={{
             color: Colors.white,
           }}
-          onPress={navigationRegisterHandler}
+          onPress={() =>
+            onRegister(email, password, repeatedPassword, username)
+          }
         >
           SIGN UP
         </Button>
-        <Pressable mt={4} onPress={navigationLoginHandler}>
+        <Pressable mt={4} onPress={() => navigation.navigate("Login")}>
           <Text color={Colors.deepestGray}>LOGIN</Text>
         </Pressable>
       </Box>

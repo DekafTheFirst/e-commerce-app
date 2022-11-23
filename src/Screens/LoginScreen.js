@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import {
   Text,
   View,
@@ -12,22 +12,23 @@ import {
 } from "native-base";
 import Colors from "../color";
 import { MaterialIcons, Ionicons } from "@expo/vector-icons";
+import { AuthenticationContext } from "../../Services/Authentication/authentiation.context";
+import { useNavigation } from "@react-navigation/native";
 
 function LoginScreen({ navigation }) {
-  const navigationLoginHandler = () => {
-    navigation.navigate("Bottom");
-  };
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const navigationRegisterHandler = () => {
-    navigation.navigate("Register");
-  };
+  const { onLogin, error } = useContext(AuthenticationContext);
+
+  // const navigation = useNavigation();
 
   return (
     <Box flex={1} bg={Colors.black}>
       <Image
         flex={1}
         alt="Logo"
-        source={require("../../assets/login-background.jpg")}
+        source={require("../../assets/login-background.png")}
       />
       <Box
         w="full"
@@ -48,6 +49,7 @@ function LoginScreen({ navigation }) {
             w="70%"
             pl={2}
             color={Colors.main}
+            onChangeText={(text) => setEmail(text)}
             borderBottomColor={Colors.underline}
           />
           <Input
@@ -60,9 +62,15 @@ function LoginScreen({ navigation }) {
             w="70%"
             pl={2}
             color={Colors.main}
+            onChangeText={(text) => {
+              setPassword(text);
+            }}
             borderBottomColor={Colors.underline}
           />
         </VStack>
+        <Text color={Colors.red} pt={2}>
+          {error}
+        </Text>
         <Button
           _pressed={{
             bg: Colors.main,
@@ -71,14 +79,14 @@ function LoginScreen({ navigation }) {
           w="40%"
           rounded={50}
           bg={Colors.main}
-          onPress={navigationLoginHandler}
+          onPress={() => onLogin(email, password)}
           _text={{
             color: Colors.white,
           }}
         >
           LOGIN
         </Button>
-        <Pressable mt={4} onPress={navigationRegisterHandler}>
+        <Pressable mt={4} onPress={() => navigation.navigate("Register")}>
           <Text color={Colors.deepestGray}>SIGN UP</Text>
         </Pressable>
       </Box>

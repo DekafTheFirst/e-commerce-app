@@ -1,20 +1,28 @@
 import { View, Text } from "react-native";
-import React from "react";
-import { Box, FormControl, Input, ScrollView, VStack } from "native-base";
+import React, { useContext } from "react";
+import { Box, FormControl, Icon, Input, ScrollView, VStack } from "native-base";
 import Colors from "../../color";
 import Buttone from "../Buttone";
-
-const Inputs = [
-  {
-    label: "USERNAME",
-    type: "text",
-  },
-  { label: "EMAIL", type: "text" },
-  { label: "NEW PASSWORD", type: "password" },
-  { label: "CONFIRM PASSWORD", type: "password" },
-];
+import { AuthenticationContext } from "../../../Services/Authentication/authentiation.context";
+import { AntDesign } from "@expo/vector-icons";
 
 export default function Profile() {
+  const { onLogout, user } = useContext(AuthenticationContext);
+
+  const Inputs = [
+    {
+      label: "USERNAME",
+      type: "text",
+      defaultValue: user.displayName,
+    },
+    { label: "EMAIL", type: "text", defaultValue: user.email },
+    { label: "NEW PASSWORD", type: "password", defaultValue: user.password },
+    {
+      label: "CONFIRM PASSWORD",
+      type: "password",
+      defaultValue: user.password,
+    },
+  ];
   return (
     <Box h="full" bg={Colors.white} px={5}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -42,11 +50,21 @@ export default function Profile() {
                   borderColor: Colors.main,
                   borderWidth: 0,
                 }}
+                defaultValue={i.defaultValue}
               />
             </FormControl>
           ))}
           <Buttone bg={Colors.main} color={Colors.white}>
             UPDATE PROFILE
+          </Buttone>
+          <Buttone
+            bg={Colors.main}
+            color={Colors.white}
+            onPress={() => onLogout()}
+            style={{ flexDirection: "row" }}
+            rightIcon={<AntDesign name="logout" size={24} color="black" />}
+          >
+            LOGOUT
           </Buttone>
         </VStack>
       </ScrollView>

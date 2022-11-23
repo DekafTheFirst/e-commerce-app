@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Box,
   Button,
@@ -13,7 +13,12 @@ import CartEmpty from "../Components/CartEmpty";
 import CartItems from "../Components/CartItems";
 import Buttone from "../Components/Buttone";
 import { useNavigation } from "@react-navigation/native";
+import { AuthenticationContext } from "../../Services/Authentication/authentiation.context";
+import LoginScreen from "./LoginScreen";
+import AccountNav from "../Components/Navigation/AccountNav";
 function CartScreen() {
+  const { isAuthenticated } = useContext(AuthenticationContext);
+
   const navigation = useNavigation();
 
   function shippingHandler() {
@@ -21,14 +26,14 @@ function CartScreen() {
   }
 
   return (
-    <Box flex={1} safeAreaTop bg={Colors.subGreen}>
-      <Center w="full" py={5}>
-        <Text color={Colors.black} fontSize={20} bold>
-          Cart
-        </Text>
-      </Center>
-      {/* <CartEmpty /> */}
-      <ScrollView showsVerticalScrollIndicator={false}>
+    <>
+      <Box flex={1} safeAreaTop bg={Colors.subGreen}>
+        <Center w="full" py={5}>
+          <Text color={Colors.black} fontSize={20} bold>
+            Cart
+          </Text>
+        </Center>
+        {/* <CartEmpty /> */}
         <CartItems />
         <Center mt={5}>
           <HStack
@@ -70,8 +75,8 @@ function CartScreen() {
             CHECKOUT
           </Buttone>
         </Center>
-      </ScrollView>
-    </Box>
+      </Box>
+    </>
   );
 }
 

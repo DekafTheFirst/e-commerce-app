@@ -23,7 +23,7 @@ const Swiper = () => (
     data={products.slice(6)}
     renderHiddenItem={renderHiddenItem}
     renderItem={renderItem}
-    showsVerticalScrollIndicator={false}
+    showsVerticalScrollIndicator={true}
   />
 );
 
@@ -37,7 +37,7 @@ const renderItem = (data, rowMap) => (
         rounded={10}
         overflow="hidden"
       >
-        <Center w="25%" bg={Colors.deepGray} px={2}>
+        <Center w="30%" bg={Colors.deepGray} px={2}>
           <Image
             source={{ uri: data.item.image }}
             alt={data.item.name}
@@ -46,7 +46,7 @@ const renderItem = (data, rowMap) => (
             resizeMode="contain"
           ></Image>
         </Center>
-        <VStack w="60%" px={2} space={2}>
+        <VStack w="55%" px={2} space={2}>
           <Text isTruncated color={Colors.black} bold fontSize={12}>
             {data.item.name}
           </Text>
