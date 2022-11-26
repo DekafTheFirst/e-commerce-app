@@ -11,6 +11,7 @@ import BottomNav from "./src/Components/Navigation/BottomNav";
 import PaymentScreen from "./src/Screens/PaymentScreen";
 import PlaceOrderScreen from "./src/Screens/PlaceOrderScreen";
 import { AuthenticationContextProvider } from "./Services/Authentication/authentiation.context";
+import AccountNav from "./src/Components/Navigation/AccountNav";
 
 const Stack = createNativeStackNavigator();
 
@@ -22,12 +23,12 @@ export default function App() {
           <StatusBar hidden={false} />
 
           <Stack.Navigator
-            initialRouteName="Bottom"
+            initialRouteName="AccountNav"
             screenOptions={{
               headerShown: false,
             }}
           >
-            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="AccountNav" component={AccountNav} />
             <Stack.Screen name="Register" component={RegisterScreen} />
             <Stack.Screen name="Order" component={OrderScreen} />
             <Stack.Screen name="Bottom" component={BottomNav} />

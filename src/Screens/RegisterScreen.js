@@ -27,7 +27,7 @@ function RegisterScreen({ navigation }) {
       <Image
         flex={1}
         alt="Logo"
-        source={require("../../assets/register-background.png")}
+        source={require("../../assets/login-background.png")}
       />
       <Box
         w="full"
@@ -37,76 +37,93 @@ function RegisterScreen({ navigation }) {
         px="6"
         justifyContent="center"
       >
-        <Heading>SIGN UP</Heading>
+        <Heading>Sign Up</Heading>
         <VStack space={6} pt="6">
           <Input
+            size="md"
             InputLeftElement={
-              <FontAwesome name="user" size={24} color={Colors.main} />
+              <FontAwesome name="user" size={20} color={Colors.black} />
             }
             variant="underlined"
-            placeholder="John Doe"
+            placeholder="Name"
+            placeholderTextColor={Colors.black}
             w="70%"
-            pl={2}
-            color={Colors.main}
-            onChangeText={(text) => setUsername(text)}
+            p={2}
+            pl={3}
+            mb={3}
+            color={Colors.black}
             borderBottomColor={Colors.underline}
+            borderBottomWidth={0.5}
           />
           <Input
+            size="md"
             InputLeftElement={
-              <MaterialIcons name="email" size={24} color={Colors.main} />
+              <MaterialIcons name="email" size={20} color={Colors.black} />
             }
             variant="underlined"
-            placeholder="user@gmail.com"
+            placeholder="Email Address"
+            placeholderTextColor={Colors.black}
             w="70%"
             pl={2}
+            mb={3}
             color={Colors.main}
             onChangeText={(text) => setEmail(text)}
             borderBottomColor={Colors.underline}
+            borderBottomWidth={0.5}
           />
           <Input
+            size="md"
             InputLeftElement={
-              <Ionicons name="eye" size={24} color={Colors.main} />
+              <Ionicons name="eye" size={20} color={Colors.black} />
             }
             variant="underlined"
-            placeholder="**********"
+            placeholder="Enter Password"
+            placeholderTextColor={Colors.black}
             type="password"
             w="70%"
             pl={2}
+            mb={3}
             color={Colors.main}
             onChangeText={(text) => setPassword(text)}
             borderBottomColor={Colors.underline}
+            borderBottomWidth={0.5}
           />
 
           <Input
+            size="md"
             InputLeftElement={
-              <Ionicons name="eye" size={24} color={Colors.main} />
+              <Ionicons name="eye" size={20} color={Colors.black} />
             }
             variant="underlined"
-            placeholder="**********"
+            placeholder="Confirm password"
+            placeholderTextColor={Colors.black}
             type="password"
             w="70%"
             pl={2}
             color={Colors.main}
             onChangeText={(text) => setRepeatedPassword(text)}
             borderBottomColor={Colors.underline}
+            borderBottomWidth={0.5}
           />
         </VStack>
         <Button
           _pressed={{
             bg: Colors.main,
           }}
+          p={4}
           my={30}
-          w="40%"
           rounded={50}
           bg={Colors.main}
           _text={{
-            color: Colors.white,
+            color: Colors.black,
+            fontWeight: "bold",
+            fontSize: 16,
           }}
           onPress={() =>
             onRegister(email, password, repeatedPassword, username)
           }
         >
-          SIGN UP
+          Sign up
         </Button>
         <Pressable mt={4} onPress={() => navigation.navigate("Login")}>
           <Text color={Colors.deepestGray}>LOGIN</Text>

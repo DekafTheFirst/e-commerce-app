@@ -94,7 +94,7 @@ const BottomNav = () => {
       {/* PROFILE */}
       <Tab.Screen
         name="Profile"
-        component={isAuthenticated ? ProfileScreen : AccountNav}
+        component={isAuthenticated ? ProfileScreen : ""}
         options={{
           tabBarIcon: ({ focused }) => (
             <Center>
