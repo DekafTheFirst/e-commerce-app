@@ -16,7 +16,7 @@ import CartScreen from "../../Screens/CartScreen";
 import color from "../../color";
 import StackNav from "./StackNav";
 import AccountNav from "./AccountNav";
-import { AuthenticationContext } from "../../../Services/Firebase/authentiation.context";
+import { AuthenticationContext } from "../../../Services/Firebase/authentication.context";
 
 const Tab = createBottomTabNavigator();
 

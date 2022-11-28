@@ -12,7 +12,7 @@ import {
 } from "native-base";
 import Colors from "../color";
 import { MaterialIcons, Ionicons, FontAwesome } from "@expo/vector-icons";
-import { AuthenticationContext } from "../../Services/Firebase/authentiation.context";
+import { AuthenticationContext } from "../../Services/Firebase/authentication.context";
 
 function RegisterScreen({ navigation }) {
   const [username, setUsername] = useState("");

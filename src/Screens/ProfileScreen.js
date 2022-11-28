@@ -3,7 +3,7 @@ import { Center, Heading, Image, Text, View } from "native-base";
 import Colors from "../color";
 import Tabs from "../Components/Profile/Tabs";
 import LoginScreen from "./LoginScreen";
-import { AuthenticationContext } from "../../Services/Firebase/authentiation.context";
+import { AuthenticationContext } from "../../Services/Firebase/authentication.context";
 function ProfileScreen() {
   const { isAuthenticated, user } = useContext(AuthenticationContext);
   return (

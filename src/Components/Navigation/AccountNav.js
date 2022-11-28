@@ -3,7 +3,7 @@ import { View, Text } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "../../Screens/LoginScreen";
 import RegisterScreen from "../../Screens/RegisterScreen";
-import { AuthenticationContext } from "../../../Services/Firebase/authentiation.context";
+import { AuthenticationContext } from "../../../Services/Firebase/authentication.context";
 import BottomNav from "./BottomNav";
 
 const Stack = createNativeStackNavigator();

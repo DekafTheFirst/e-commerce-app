@@ -10,7 +10,7 @@ import BottomNav from "./src/Components/Navigation/BottomNav";
 
 import PaymentScreen from "./src/Screens/PaymentScreen";
 import PlaceOrderScreen from "./src/Screens/PlaceOrderScreen";
-import { AuthenticationContextProvider } from "./Services/Firebase/authentiation.context";
+import { AuthenticationContextProvider } from "./Services/Firebase/authentication.context";
 import AccountNav from "./src/Components/Navigation/AccountNav";
 
 const Stack = createNativeStackNavigator();

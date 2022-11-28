@@ -9,19 +9,19 @@ import {
   Heading,
   Center,
 } from "native-base";
-import React from "react";
-import products from "../data/Products";
+import React, { useContext } from "react";
+
 import Colors from "../color";
 import Rating from "./Rating";
 import { useNavigation } from "@react-navigation/native";
+import { AuthenticationContext } from "../../Services/Firebase/authentication.context";
 
 export default function HomeProducts() {
+  const { products, cartItems } = useContext(AuthenticationContext);
   const navigation = useNavigation();
-
   function navProduct(product) {
     navigation.navigate("Single", product);
   }
-
   return (
     <ScrollView flex={1} showsVerticalScrollIndicator={false}>
       <Flex

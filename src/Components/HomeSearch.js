@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, HStack, Text, Input, Pressable, Box } from "native-base";
 import { FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import Colors from "../color";
+import { AuthenticationContext } from "../../Services/Firebase/authentication.context";
 
 export default function HomeSearch() {
   const navigation = useNavigation();
-
+  const { cartItems } = useContext(AuthenticationContext);
   const navCart = () => {
     navigation.navigate("Cart");
   };
@@ -47,7 +48,7 @@ export default function HomeSearch() {
             fontSize: "11px",
           }}
         >
-          5
+          {cartItems.length}
         </Box>
       </Pressable>
     </HStack>

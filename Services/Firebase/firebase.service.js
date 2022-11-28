@@ -1,19 +1,26 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getDatabase } from "firebase/database";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
 
 import {
   getAuth,
+  FacebookAuthProvider,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
+
+import { getStorage } from "firebase/storage";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
+
+// Initialize Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyDenEBBkiROru6Es2ZQNy5_TiVSO51GUw8",
   authDomain: "e-car-dealership.firebaseapp.com",
+  databaseURL: "https://e-car-dealership-default-rtdb.firebaseio.com",
   projectId: "e-car-dealership",
   storageBucket: "e-car-dealership.appspot.com",
   messagingSenderId: "679257299934",
@@ -22,12 +29,14 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-export const db = getDatabase(app);
 
-export const auth = getAuth(app);
+const db = getFirestore(app);
+const auth = getAuth(app);
 
-export const loginRequest = (email, password) =>
+const loginRequest = (email, password) =>
   signInWithEmailAndPassword(auth, email, password);
 
-export const registerRequest = (email, password) =>
+const registerRequest = (email, password) =>
   createUserWithEmailAndPassword(auth, email, password);
+
+export { app, db, auth, loginRequest, registerRequest, addDoc, collection };

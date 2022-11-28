@@ -9,23 +9,27 @@ import {
   VStack,
   Button,
 } from "native-base";
-import React from "react";
+import React, { useContext, useState } from "react";
 import Colors from "../color";
 import products from "../data/Products";
 import { SwipeListView } from "react-native-swipe-list-view";
 import { FontAwesome } from "@expo/vector-icons";
-const Swiper = () => (
-  <SwipeListView
-    rightOpenValue={-50}
-    previewRowKey="0"
-    previewOpenValue={-40}
-    previewOpenDelay={3000}
-    data={products.slice(6)}
-    renderHiddenItem={renderHiddenItem}
-    renderItem={renderItem}
-    showsVerticalScrollIndicator={true}
-  />
-);
+import { AuthenticationContext } from "../../Services/Firebase/authentication.context";
+const Swiper = () => {
+  const { cartItems } = useContext(AuthenticationContext);
+  return (
+    <SwipeListView
+      rightOpenValue={-50}
+      previewRowKey="0"
+      previewOpenValue={-40}
+      previewOpenDelay={3000}
+      data={cartItems}
+      renderHiddenItem={renderHiddenItem}
+      renderItem={renderItem}
+      showsVerticalScrollIndicator={true}
+    />
+  );
+};
 
 const renderItem = (data, rowMap) => (
   <Pressable>

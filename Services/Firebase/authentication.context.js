@@ -1,6 +1,7 @@
 import { onAuthStateChanged, signOut, updateProfile } from "firebase/auth";
+import { collection, doc, getDocs } from "firebase/firestore";
 import React, { useState, createContext, useEffect } from "react";
-import { auth } from "./firebase.service";
+import { auth, db } from "./firebase.service";
 import { loginRequest } from "./firebase.service";
 import { registerRequest } from "./firebase.service";
 
@@ -11,6 +12,8 @@ export const AuthenticationContextProvider = ({ children }) => {
   const [isLoggedOut, setIsLoggedOut] = useState(false);
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
+  const [products, setProducts] = useState([]);
+  const [cartItems, setCartItems] = useState(["1", "2"]);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -75,6 +78,25 @@ export const AuthenticationContextProvider = ({ children }) => {
       });
   };
 
+  const getProducts = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, "products")).then(
+        (querySnapshot) =>
+          querySnapshot.forEach((doc) => {
+            setProducts((arr) => [...arr, doc.data()]);
+          })
+      );
+    } catch (error) {
+      setIsLoading(false);
+
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getProducts();
+  }, []);
+
   return (
     <AuthenticationContext.Provider
       value={{
@@ -86,6 +108,8 @@ export const AuthenticationContextProvider = ({ children }) => {
         onLogin,
         onRegister,
         onLogout,
+        products,
+        cartItems,
       }}
     >
       {children}
