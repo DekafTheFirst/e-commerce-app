@@ -16,7 +16,7 @@ import CartScreen from "../../Screens/CartScreen";
 import color from "../../color";
 import StackNav from "./StackNav";
 import AccountNav from "./AccountNav";
-import { AuthenticationContext } from "../../../Services/Authentication/authentiation.context";
+import { AuthenticationContext } from "../../../Services/Firebase/authentiation.context";
 
 const Tab = createBottomTabNavigator();
 
@@ -94,7 +94,7 @@ const BottomNav = () => {
       {/* PROFILE */}
       <Tab.Screen
         name="Profile"
-        component={isAuthenticated ? ProfileScreen : ""}
+        component={isAuthenticated ? ProfileScreen : AccountNav}
         options={{
           tabBarIcon: ({ focused }) => (
             <Center>

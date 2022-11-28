@@ -1,8 +1,8 @@
 import { onAuthStateChanged, signOut, updateProfile } from "firebase/auth";
 import React, { useState, createContext, useEffect } from "react";
-import { auth } from "./authentication.service";
-import { loginRequest } from "./authentication.service";
-import { registerRequest } from "./authentication.service";
+import { auth } from "./firebase.service";
+import { loginRequest } from "./firebase.service";
+import { registerRequest } from "./firebase.service";
 
 export const AuthenticationContext = createContext();
 
@@ -23,7 +23,7 @@ export const AuthenticationContextProvider = ({ children }) => {
         setIsLoggedOut(true);
       }
     });
-  }, []);
+  }, [auth]);
 
   const onLogin = (email, password) => {
     setIsLoading(true);

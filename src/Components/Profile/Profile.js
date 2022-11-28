@@ -3,12 +3,13 @@ import React, { useContext } from "react";
 import { Box, FormControl, Icon, Input, ScrollView, VStack } from "native-base";
 import Colors from "../../color";
 import Buttone from "../Buttone";
-import { AuthenticationContext } from "../../../Services/Authentication/authentiation.context";
+import { AuthenticationContext } from "../../../Services/Firebase/authentiation.context";
 import { AntDesign } from "@expo/vector-icons";
 
 export default function Profile() {
   const { onLogout, user } = useContext(AuthenticationContext);
 
+  console.log(user);
   const Inputs = [
     {
       label: "USERNAME",

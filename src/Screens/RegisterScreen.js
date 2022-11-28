@@ -12,7 +12,7 @@ import {
 } from "native-base";
 import Colors from "../color";
 import { MaterialIcons, Ionicons, FontAwesome } from "@expo/vector-icons";
-import { AuthenticationContext } from "../../Services/Authentication/authentiation.context";
+import { AuthenticationContext } from "../../Services/Firebase/authentiation.context";
 
 function RegisterScreen({ navigation }) {
   const [username, setUsername] = useState("");
@@ -54,6 +54,7 @@ function RegisterScreen({ navigation }) {
             color={Colors.black}
             borderBottomColor={Colors.underline}
             borderBottomWidth={0.5}
+            onChangeText={(text) => setUsername(text)}
           />
           <Input
             size="md"

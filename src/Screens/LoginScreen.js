@@ -12,7 +12,7 @@ import {
 } from "native-base";
 import Colors from "../color";
 import { MaterialIcons, Ionicons } from "@expo/vector-icons";
-import { AuthenticationContext } from "../../Services/Authentication/authentiation.context";
+import { AuthenticationContext } from "../../Services/Firebase/authentiation.context";
 import { useNavigation } from "@react-navigation/native";
 
 function LoginScreen({ navigation }) {

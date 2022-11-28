@@ -13,7 +13,7 @@ import CartEmpty from "../Components/CartEmpty";
 import CartItems from "../Components/CartItems";
 import Buttone from "../Components/Buttone";
 import { useNavigation } from "@react-navigation/native";
-import { AuthenticationContext } from "../../Services/Authentication/authentiation.context";
+import { AuthenticationContext } from "../../Services/Firebase/authentiation.context";
 import LoginScreen from "./LoginScreen";
 import AccountNav from "../Components/Navigation/AccountNav";
 function CartScreen() {
