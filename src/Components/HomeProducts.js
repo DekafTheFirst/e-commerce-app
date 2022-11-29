@@ -19,9 +19,11 @@ import { AuthenticationContext } from "../../Services/Firebase/authentication.co
 export default function HomeProducts() {
   const { products, cartItems } = useContext(AuthenticationContext);
   const navigation = useNavigation();
+
   function navProduct(product) {
     navigation.navigate("Single", product);
   }
+
   return (
     <ScrollView flex={1} showsVerticalScrollIndicator={false}>
       <Flex

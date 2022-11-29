@@ -13,7 +13,7 @@ export const AuthenticationContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
   const [products, setProducts] = useState([]);
-  const [cartItems, setCartItems] = useState(["1", "2"]);
+  const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -110,6 +110,7 @@ export const AuthenticationContextProvider = ({ children }) => {
         onLogout,
         products,
         cartItems,
+        setCartItems,
       }}
     >
       {children}

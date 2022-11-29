@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   HStack,
   Heading,
@@ -16,17 +16,18 @@ import Rating from "../Components/Rating";
 import Buttone from "../Components/Buttone";
 import Review from "../Components/Review";
 import { useNavigation } from "@react-navigation/native";
+import { AuthenticationContext } from "../../Services/Firebase/authentication.context";
 
 function SingleProductScreen({ route }) {
   const [value, setValue] = useState(0);
-
+  const { cartItems, setCartItems } = useContext(AuthenticationContext);
   const navigation = useNavigation();
   const product = route.params;
 
   function addCartHandler() {
-    navigation.navigate("Cart");
+    setCartItems((arr) => [...arr, product]);
   }
-
+  console.log(cartItems);
   return (
     <Box safeArea flex={1} bg={Colors.white}>
       <ScrollView px={5} showsVerticalScrollIndicator={false}>
