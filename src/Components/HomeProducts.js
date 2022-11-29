@@ -15,9 +15,10 @@ import Colors from "../color";
 import Rating from "./Rating";
 import { useNavigation } from "@react-navigation/native";
 import { AuthenticationContext } from "../../Services/Firebase/authentication.context";
+import { ActivityIndicator } from "react-native";
 
 export default function HomeProducts() {
-  const { products, cartItems } = useContext(AuthenticationContext);
+  const { products, cartItems, isLoading } = useContext(AuthenticationContext);
   const navigation = useNavigation();
 
   function navProduct(product) {
@@ -32,6 +33,11 @@ export default function HomeProducts() {
         justifyContent="space-between"
         px={6}
       >
+        {isLoading && (
+          <Center>
+            <ActivityIndicator />
+          </Center>
+        )}
         {products.map((product) => (
           <Pressable
             key={product._id}
