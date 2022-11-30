@@ -11,87 +11,186 @@ import {
 } from "native-base";
 import React, { useContext, useState } from "react";
 import Colors from "../color";
-import products from "../data/Products";
 import { SwipeListView } from "react-native-swipe-list-view";
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 import { AuthenticationContext } from "../../Services/Firebase/authentication.context";
-const Swiper = () => {
-  const { cartItems } = useContext(AuthenticationContext);
-  return (
-    <SwipeListView
-      rightOpenValue={-50}
-      previewRowKey="0"
-      previewOpenValue={-40}
-      previewOpenDelay={3000}
-      data={cartItems}
-      renderHiddenItem={renderHiddenItem}
-      renderItem={renderItem}
-      showsVerticalScrollIndicator={true}
-    />
-  );
-};
-
-const renderItem = (data, rowMap) => (
-  <Pressable>
-    <Box ml={6} mb={3}>
-      <HStack
-        alignItems="center"
-        bg={Colors.white}
-        shadow={1}
-        rounded={10}
-        overflow="hidden"
-      >
-        <Center w="30%" bg={Colors.deepGray} px={2}>
-          <Image
-            source={{ uri: data.item.image }}
-            alt={data.item.name}
-            w="full"
-            h={24}
-            resizeMode="contain"
-          ></Image>
-        </Center>
-        <VStack w="55%" px={2} space={2}>
-          <Text isTruncated color={Colors.black} bold fontSize={12}>
-            {data.item.name}
-          </Text>
-          <Text bold color={Colors.lightBlack}>
-            ${data.item.price}
-          </Text>
-        </VStack>
-        <Center>
-          <Button
-            bg={Colors.main}
-            _pressed={{ bg: Colors.main }}
-            _text={{ color: Colors.white }}
-          >
-            5
-          </Button>
-        </Center>
-      </HStack>
-    </Box>
-  </Pressable>
-);
-
-const renderHiddenItem = () => (
-  <Pressable
-    w={50}
-    roundedTopRight={10}
-    roundedBottomRight={10}
-    h="85%"
-    ml="auto"
-    justifyContent="center"
-    bg={Colors.red}
-  >
-    <Center alignItems="center" space={2}>
-      <FontAwesome name="trash" size={24} color={Colors.white} />
-    </Center>
-  </Pressable>
-);
+import { TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 export default function CartItems() {
+  const { cartItems, setCartItems } = useContext(AuthenticationContext);
+  const navigation = useNavigation();
+
+  function onAddQuantity(thisItem) {
+    setCartItems(
+      cartItems.map((x) =>
+        x._id === thisItem._id ? { ...thisItem, qty: thisItem.qty + 1 } : x
+      )
+    );
+  }
+
+  function onReduceQuantity(thisItem) {
+    if (thisItem.qty > 1) {
+      setCartItems(
+        cartItems.map((x) =>
+          x._id === thisItem._id ? { ...thisItem, qty: thisItem.qty - 1 } : x
+        )
+      );
+    } else {
+      removeItemFromCart(thisItem);
+    }
+    console.log(cartItems);
+  }
+
+  function removeItemFromCart(thisItem) {
+    setCartItems(cartItems.filter((item) => item._id !== thisItem._id));
+  }
+
   return (
     <Box mr={6}>
-      <Swiper />
+      {cartItems.map((item) => (
+        <TouchableOpacity
+          key={item._id}
+          onPress={() => navigation.navigate("Single", item)}
+          style={{
+            width: "100%",
+            height: 100,
+            marginVertical: 6,
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          <View
+            style={{
+              width: "35%",
+              height: 100,
+              padding: 7,
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: Colors.backgroundLight,
+              borderRadius: 10,
+              marginRight: 22,
+            }}
+          >
+            <Image
+              source={{ uri: item.image }}
+              style={{
+                width: "100%",
+                height: "100%",
+                resizeMode: "contain",
+              }}
+              alt={item.name}
+            />
+          </View>
+          <View
+            style={{
+              flex: 1,
+              height: "100%",
+              justifyContent: "space-around",
+            }}
+          >
+            <View style={{}}>
+              <Text
+                style={{
+                  fontSize: 14,
+                  maxWidth: "100%",
+                  color: Colors.black,
+                  fontWeight: "600",
+                  letterSpacing: 1,
+                }}
+              >
+                {item.name}
+              </Text>
+              <View
+                style={{
+                  marginTop: 4,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  opacity: 0.6,
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 14,
+                    fontWeight: "400",
+                    maxWidth: "85%",
+                    marginRight: 4,
+                  }}
+                >
+                  ${item.price}
+                </Text>
+                <Text>(~${item.price + item.price / 20})</Text>
+              </View>
+            </View>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <Pressable
+                  style={{
+                    borderRadius: 100,
+                    marginRight: 20,
+                    padding: 4,
+                    borderWidth: 1,
+                    borderColor: Colors.backgroundMedium,
+                    opacity: 0.5,
+                  }}
+                  onPress={() => onReduceQuantity(item)}
+                >
+                  <MaterialCommunityIcons
+                    name="minus"
+                    style={{
+                      fontSize: 16,
+                      color: Colors.backgroundDark,
+                    }}
+                  />
+                </Pressable>
+                <Text>{item.qty}</Text>
+                <Pressable
+                  style={{
+                    borderRadius: 100,
+                    marginLeft: 20,
+                    padding: 4,
+                    borderWidth: 1,
+                    borderColor: Colors.backgroundMedium,
+                    opacity: 0.5,
+                  }}
+                  onPress={() => onAddQuantity(item)}
+                >
+                  <MaterialCommunityIcons
+                    name="plus"
+                    style={{
+                      fontSize: 16,
+                      color: Colors.backgroundDark,
+                    }}
+                  />
+                </Pressable>
+              </View>
+              <TouchableOpacity onPress={() => removeItemFromCart(item)}>
+                <MaterialCommunityIcons
+                  name="delete-outline"
+                  style={{
+                    fontSize: 16,
+                    color: Colors.backgroundDark,
+                    backgroundColor: Colors.backgroundLight,
+                    padding: 8,
+                    borderRadius: 100,
+                  }}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+        </TouchableOpacity>
+      ))}
     </Box>
   );
 }

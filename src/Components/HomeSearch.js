@@ -12,6 +12,16 @@ export default function HomeSearch() {
     navigation.navigate("Cart");
   };
 
+  let numOfCartItems = 0;
+
+  if (cartItems.length > 0) {
+    cartItems.map((item) => {
+      numOfCartItems += item.qty;
+    });
+  } else {
+    numOfCartItems = 0;
+  }
+
   return (
     <HStack
       space={3}
@@ -48,7 +58,7 @@ export default function HomeSearch() {
             fontSize: "11px",
           }}
         >
-          {cartItems.length}
+          {numOfCartItems}
         </Box>
       </Pressable>
     </HStack>

@@ -12,4 +12,7 @@ export default Colors = {
   blue: "#3B87F9",
   underline: "#E5E5E5",
   paypal: "#FFB730",
+  backgroundLight: "#F0F0F3",
+  backgroundMedium: "#B9B9B9",
+  backgroundDark: "#777777",
 };

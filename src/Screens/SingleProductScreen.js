@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   HStack,
   Heading,
@@ -19,15 +19,27 @@ import { useNavigation } from "@react-navigation/native";
 import { AuthenticationContext } from "../../Services/Firebase/authentication.context";
 
 function SingleProductScreen({ route }) {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(1);
   const { cartItems, setCartItems } = useContext(AuthenticationContext);
+
   const navigation = useNavigation();
   const product = route.params;
 
   function addCartHandler() {
-    setCartItems((arr) => [...arr, product]);
+    const exist = cartItems.find((x) => x._id === product._id);
+    if (exist) {
+      setCartItems(
+        cartItems.map((x) =>
+          x._id === product._id ? { ...exist, qty: exist.qty + value } : x
+        )
+      );
+    } else {
+      for (let x = 1; x <= value; x++) {
+        setCartItems(() => [...cartItems, { ...product, qty: value }]);
+      }
+    }
   }
-  console.log(cartItems);
+
   return (
     <Box safeArea flex={1} bg={Colors.white}>
       <ScrollView px={5} showsVerticalScrollIndicator={false}>
@@ -53,10 +65,12 @@ function SingleProductScreen({ route }) {
               iconSize={25}
               step={1}
               maxValue={product.countInStock}
-              minValue={0}
+              minValue={1}
               borderColor={Colors.deepGray}
               rounded
-              onChange={() => {}}
+              onChange={(input) => {
+                setValue(input);
+              }}
               textColor={Colors.black}
               iconStyle={{ color: Colors.white }}
               rightButtonBackgroundColor={Colors.main}

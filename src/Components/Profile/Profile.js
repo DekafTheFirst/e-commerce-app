@@ -9,7 +9,6 @@ import { AntDesign } from "@expo/vector-icons";
 export default function Profile() {
   const { onLogout, user } = useContext(AuthenticationContext);
 
-  console.log(user);
   const Inputs = [
     {
       label: "USERNAME",

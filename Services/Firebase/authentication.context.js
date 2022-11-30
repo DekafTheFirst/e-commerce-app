@@ -79,11 +79,14 @@ export const AuthenticationContextProvider = ({ children }) => {
   };
 
   const getProducts = async () => {
+    setIsLoading(true);
+
     try {
       const querySnapshot = await getDocs(collection(db, "products")).then(
         (querySnapshot) =>
           querySnapshot.forEach((doc) => {
             setProducts((arr) => [...arr, doc.data()]);
+            setIsLoading(false);
           })
       );
     } catch (error) {

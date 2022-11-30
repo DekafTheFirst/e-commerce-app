@@ -17,7 +17,7 @@ import { AuthenticationContext } from "../../Services/Firebase/authentication.co
 import LoginScreen from "./LoginScreen";
 import AccountNav from "../Components/Navigation/AccountNav";
 function CartScreen() {
-  const { isAuthenticated } = useContext(AuthenticationContext);
+  const { isAuthenticated, cartItems } = useContext(AuthenticationContext);
 
   const navigation = useNavigation();
 
@@ -25,9 +25,15 @@ function CartScreen() {
     navigation.navigate("Shipping");
   }
 
+  let sum = 0;
+
+  cartItems.forEach((item) => {
+    sum += item.price * item.qty;
+  });
+
   return (
     <>
-      <Box flex={1} safeAreaTop bg={Colors.subGreen}>
+      <Box flex={1} safeAreaTop px={5} bg={Colors.white}>
         <Center w="full" py={5}>
           <Text color={Colors.black} fontSize={20} bold>
             Cart
@@ -41,7 +47,7 @@ function CartScreen() {
             justifyContent="space-between"
             bg={Colors.white}
             shadow={2}
-            w="90%"
+            w="100%"
             pl={5}
             h={45}
             alignItems="center"
@@ -59,8 +65,9 @@ function CartScreen() {
               _pressed={{
                 bg: Colors.main,
               }}
+              flexDirection="row"
             >
-              $356
+              {`$${sum}`}
             </Button>
           </HStack>
         </Center>
