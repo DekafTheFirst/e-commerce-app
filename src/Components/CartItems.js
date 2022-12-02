@@ -13,12 +13,12 @@ import React, { useContext, useState } from "react";
 import Colors from "../color";
 import { SwipeListView } from "react-native-swipe-list-view";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
-import { AuthenticationContext } from "../../Services/Firebase/authentication.context";
+import { FirebaseContext } from "../../Services/Firebase/firebase.context";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 export default function CartItems() {
-  const { cartItems, setCartItems } = useContext(AuthenticationContext);
+  const { cartItems, setCartItems } = useContext(FirebaseContext);
   const navigation = useNavigation();
 
   function onAddQuantity(thisItem) {

@@ -1,13 +1,13 @@
 import { onAuthStateChanged, signOut, updateProfile } from "firebase/auth";
-import { collection, doc, getDocs } from "firebase/firestore";
+import { collection, doc, getDocs, setDoc } from "firebase/firestore";
 import React, { useState, createContext, useEffect } from "react";
 import { auth, db } from "./firebase.service";
 import { loginRequest } from "./firebase.service";
 import { registerRequest } from "./firebase.service";
 
-export const AuthenticationContext = createContext();
+export const FirebaseContext = createContext();
 
-export const AuthenticationContextProvider = ({ children }) => {
+export const FirebaseContextProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoggedOut, setIsLoggedOut] = useState(false);
   const [user, setUser] = useState(null);
@@ -38,7 +38,6 @@ export const AuthenticationContextProvider = ({ children }) => {
       .catch((e) => {
         setIsLoading(false);
         setError(e.message);
-        console.log(e);
       });
   };
 
@@ -47,35 +46,25 @@ export const AuthenticationContextProvider = ({ children }) => {
     signOut(auth);
   };
 
-  const onRegister = (email, password, repeatedPassword, username) => {
-    setIsLoading(true);
-
-    if (password !== repeatedPassword) {
-      setError("Error: Passwords do not match");
-      return;
+  const onRegister = async (email, password, repeatedPasswprd, username) => {
+    if (password !== repeatedPasswprd) {
+      setError("Password doesn't match repeated password");
     }
-
-    registerRequest(email, password)
-      .then((u) => {
-        setIsLoading(false);
-        setUser(u.user);
-      })
-      .then(() => {
-        updateProfile(auth.currentUser, {
+    try {
+      return await registerRequest(email, password).then(async (res) => {
+        console.log(res);
+        const userInfo = {
           displayName: username,
-          photoURL: "https://example.com/jane-q-user/profile.jpg",
-        })
-          .then(() => {
-            console.log("Profile updated successfuly...");
-          })
-          .catch((error) => {
-            console.log(error.message);
-          });
-      })
-      .catch((e) => {
-        setIsLoading(false);
-        setError(e.message);
+          photoURL:
+            "https://www.pngplay.com/wp-content/uploads/9/Mclaren-P1-PNG-Images-HD.png",
+        };
+        // Add user account information in Firestore to be retrieved later.
+        await setDoc(doc(db, "users", res.user.id), userInfo);
+        console.log("saved successfully");
       });
+    } catch (e) {
+      setError(e.message);
+    }
   };
 
   const getProducts = async () => {
@@ -97,11 +86,12 @@ export const AuthenticationContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    getProducts();
+    if (!products.length) {
+      getProducts();
+    }
   }, []);
-
   return (
-    <AuthenticationContext.Provider
+    <FirebaseContext.Provider
       value={{
         isAuthenticated: !!user,
         user,
@@ -117,6 +107,6 @@ export const AuthenticationContextProvider = ({ children }) => {
       }}
     >
       {children}
-    </AuthenticationContext.Provider>
+    </FirebaseContext.Provider>
   );
 };

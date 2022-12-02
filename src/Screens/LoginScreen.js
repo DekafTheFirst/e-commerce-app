@@ -12,14 +12,14 @@ import {
 } from "native-base";
 import Colors from "../color";
 import { MaterialIcons, Ionicons } from "@expo/vector-icons";
-import { AuthenticationContext } from "../../Services/Firebase/authentication.context";
+import { FirebaseContext } from "../../Services/Firebase/firebase.context";
 import { useNavigation } from "@react-navigation/native";
 
 function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { onLogin, error } = useContext(AuthenticationContext);
+  const { onLogin, error } = useContext(FirebaseContext);
 
   // const navigation = useNavigation();
 
@@ -28,7 +28,7 @@ function LoginScreen({ navigation }) {
       <Image
         flex={1}
         alt="Logo"
-        source={require("../../assets/login-background.png")}
+        source={require("../../assets/register-background.png")}
       />
       <Box
         w="full"

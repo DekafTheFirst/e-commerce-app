@@ -3,11 +3,11 @@ import { View, HStack, Text, Input, Pressable, Box } from "native-base";
 import { FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import Colors from "../color";
-import { AuthenticationContext } from "../../Services/Firebase/authentication.context";
+import { FirebaseContext } from "../../Services/Firebase/firebase.context";
 
 export default function HomeSearch() {
   const navigation = useNavigation();
-  const { cartItems } = useContext(AuthenticationContext);
+  const { cartItems } = useContext(FirebaseContext);
   const navCart = () => {
     navigation.navigate("Cart");
   };
@@ -33,7 +33,7 @@ export default function HomeSearch() {
       safeAreaTop
     >
       <Input
-        placeholder="Nike, Puma, Adidas ...."
+        placeholder="Toyota, Ford, Mercedes Benz ...."
         w="85%"
         h={12}
         bg={Colors.white}

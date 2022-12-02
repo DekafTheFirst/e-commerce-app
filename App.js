@@ -10,14 +10,13 @@ import BottomNav from "./src/Components/Navigation/BottomNav";
 
 import PaymentScreen from "./src/Screens/PaymentScreen";
 import PlaceOrderScreen from "./src/Screens/PlaceOrderScreen";
-import { AuthenticationContextProvider } from "./Services/Firebase/authentication.context";
-import AccountNav from "./src/Components/Navigation/AccountNav";
+import { FirebaseContextProvider } from "./Services/Firebase/firebase.context";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <AuthenticationContextProvider>
+    <FirebaseContextProvider>
       <NativeBaseProvider>
         <NavigationContainer>
           <StatusBar hidden={false} />
@@ -34,6 +33,6 @@ export default function App() {
           </Stack.Navigator>
         </NavigationContainer>
       </NativeBaseProvider>
-    </AuthenticationContextProvider>
+    </FirebaseContextProvider>
   );
 }

@@ -12,7 +12,7 @@ import {
 } from "native-base";
 import Colors from "../color";
 import { MaterialIcons, Ionicons, FontAwesome } from "@expo/vector-icons";
-import { AuthenticationContext } from "../../Services/Firebase/authentication.context";
+import { FirebaseContext } from "../../Services/Firebase/firebase.context";
 
 function RegisterScreen({ navigation }) {
   const [username, setUsername] = useState("");
@@ -20,14 +20,14 @@ function RegisterScreen({ navigation }) {
   const [password, setPassword] = useState("");
   const [repeatedPassword, setRepeatedPassword] = useState("");
 
-  const { onRegister, error } = useContext(AuthenticationContext);
+  const { onRegister, error } = useContext(FirebaseContext);
 
   return (
     <Box flex={1} bg={Colors.black}>
       <Image
         flex={1}
         alt="Logo"
-        source={require("../../assets/login-background.png")}
+        source={require("../../assets/register-background.png")}
       />
       <Box
         w="full"

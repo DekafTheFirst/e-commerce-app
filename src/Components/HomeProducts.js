@@ -14,11 +14,11 @@ import React, { useContext } from "react";
 import Colors from "../color";
 import Rating from "./Rating";
 import { useNavigation } from "@react-navigation/native";
-import { AuthenticationContext } from "../../Services/Firebase/authentication.context";
+import { FirebaseContext } from "../../Services/Firebase/firebase.context";
 import { ActivityIndicator } from "react-native";
 
 export default function HomeProducts() {
-  const { products, cartItems, isLoading } = useContext(AuthenticationContext);
+  const { products, cartItems, isLoading } = useContext(FirebaseContext);
   const navigation = useNavigation();
 
   function navProduct(product) {

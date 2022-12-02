@@ -13,12 +13,10 @@ import CartEmpty from "../Components/CartEmpty";
 import CartItems from "../Components/CartItems";
 import Buttone from "../Components/Buttone";
 import { useNavigation } from "@react-navigation/native";
-import { AuthenticationContext } from "../../Services/Firebase/authentication.context";
+import { FirebaseContext } from "../../Services/Firebase/firebase.context";
 import LoginScreen from "./LoginScreen";
-import AccountNav from "../Components/Navigation/AccountNav";
 function CartScreen() {
-  const { isAuthenticated, cartItems } = useContext(AuthenticationContext);
-
+  const { isAuthenticated, cartItems } = useContext(FirebaseContext);
   const navigation = useNavigation();
 
   function shippingHandler() {
@@ -71,16 +69,28 @@ function CartScreen() {
             </Button>
           </HStack>
         </Center>
-
         <Center px={5}>
-          <Buttone
-            bg={Colors.black}
-            color={Colors.white}
-            mt={10}
-            onPress={shippingHandler}
-          >
-            CHECKOUT
-          </Buttone>
+          {cartItems.length ? (
+            <Buttone
+              bg={Colors.black}
+              color={Colors.white}
+              mt={10}
+              onPress={shippingHandler}
+            >
+              CHECKOUT
+            </Buttone>
+          ) : (
+            <Buttone
+              bg={Colors.black}
+              color={Colors.white}
+              mt={10}
+              onPress={() => {
+                navigation.navigate("Main");
+              }}
+            >
+              CONTINUE SHOPPING
+            </Buttone>
+          )}
         </Center>
       </Box>
     </>

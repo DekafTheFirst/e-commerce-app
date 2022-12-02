@@ -16,27 +16,32 @@ import Rating from "../Components/Rating";
 import Buttone from "../Components/Buttone";
 import Review from "../Components/Review";
 import { useNavigation } from "@react-navigation/native";
-import { AuthenticationContext } from "../../Services/Firebase/authentication.context";
+import { FirebaseContext } from "../../Services/Firebase/firebase.context";
 
 function SingleProductScreen({ route }) {
   const [value, setValue] = useState(1);
-  const { cartItems, setCartItems } = useContext(AuthenticationContext);
+  const { cartItems, setCartItems, isAuthenticated } =
+    useContext(FirebaseContext);
 
   const navigation = useNavigation();
   const product = route.params;
 
   function addCartHandler() {
-    const exist = cartItems.find((x) => x._id === product._id);
-    if (exist) {
-      setCartItems(
-        cartItems.map((x) =>
-          x._id === product._id ? { ...exist, qty: exist.qty + value } : x
-        )
-      );
-    } else {
-      for (let x = 1; x <= value; x++) {
-        setCartItems(() => [...cartItems, { ...product, qty: value }]);
+    if (isAuthenticated) {
+      const exist = cartItems.find((x) => x._id === product._id);
+      if (exist) {
+        setCartItems(
+          cartItems.map((x) =>
+            x._id === product._id ? { ...exist, qty: exist.qty + value } : x
+          )
+        );
+      } else {
+        for (let x = 1; x <= value; x++) {
+          setCartItems(() => [...cartItems, { ...product, qty: value }]);
+        }
       }
+    } else {
+      navigation.navigate("NotVerifyScreen");
     }
   }
 
