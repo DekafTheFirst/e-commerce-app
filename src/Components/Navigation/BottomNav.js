@@ -17,6 +17,7 @@ import color from "../../color";
 import StackNav from "./StackNav";
 import { FirebaseContext } from "../../../Services/Firebase/firebase.context";
 import NotVerifyScreen from "../../Screens/NotVerifyScreen";
+import AccountNav from "./AccountNav";
 
 const Tab = createBottomTabNavigator();
 
@@ -69,7 +70,7 @@ const BottomNav = () => {
       {/* CART */}
       <Tab.Screen
         name="Cart"
-        component={isAuthenticated ? CartScreen : NotVerifyScreen}
+        component={isAuthenticated ? CartScreen : AccountNav}
         options={{
           tabBarButton: (props) => <CustomTab {...props} />,
           tabBarIcon: ({ focused }) => (
@@ -94,7 +95,7 @@ const BottomNav = () => {
       {/* PROFILE */}
       <Tab.Screen
         name="Profile"
-        component={isAuthenticated ? ProfileScreen : NotVerifyScreen}
+        component={isAuthenticated ? ProfileScreen : AccountNav}
         options={{
           tabBarIcon: ({ focused }) => (
             <Center>

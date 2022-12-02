@@ -9,15 +9,18 @@ import {
   Text,
   Button,
 } from "native-base";
-import React from "react";
+import React, { useContext } from "react";
 import products from "../data/Products";
 import color from "../color";
+import { FirebaseContext } from "../../Services/Firebase/firebase.context";
 
 const OrderItem = () => {
+  const { user, cartItems, deliveryAddress } = useContext(FirebaseContext);
+
   return (
     <FlatList
       showsVerticalScrollIndicator={false}
-      data={products.slice(0, 3)}
+      data={cartItems}
       keyExtractor={(item) => item._id}
       renderItem={({ item }) => (
         <Pressable>
@@ -52,7 +55,7 @@ const OrderItem = () => {
                   _pressed={{ bg: color.main }}
                   _text={{ color: color.white }}
                 >
-                  5
+                  {item.qty}
                 </Button>
               </Center>
             </HStack>

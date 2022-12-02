@@ -14,6 +14,19 @@ export const FirebaseContextProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
+  const [deliveryAddress, setDeliveryAddress] = useState(
+    "Deca Homes, Cebu, 6000, Philippines"
+  );
+  const [cartTotal, setCartTotal] = useState(0);
+
+  let sum = 0;
+
+  cartItems.forEach((item) => {
+    sum += item.price * item.qty;
+  });
+  useEffect(() => {
+    setCartTotal(sum);
+  }, [cartItems]);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -69,14 +82,14 @@ export const FirebaseContextProvider = ({ children }) => {
 
   const getProducts = async () => {
     setIsLoading(true);
-
     try {
       const querySnapshot = await getDocs(collection(db, "products")).then(
-        (querySnapshot) =>
+        (querySnapshot) => {
           querySnapshot.forEach((doc) => {
             setProducts((arr) => [...arr, doc.data()]);
-            setIsLoading(false);
-          })
+          });
+          setIsLoading(false);
+        }
       );
     } catch (error) {
       setIsLoading(false);
@@ -104,6 +117,8 @@ export const FirebaseContextProvider = ({ children }) => {
         products,
         cartItems,
         setCartItems,
+        deliveryAddress,
+        setDeliveryAddress,
       }}
     >
       {children}

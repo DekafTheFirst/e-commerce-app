@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Box, Heading, ScrollView } from "native-base";
 import { FontAwesome, FontAwesome5, Ionicons } from "@expo/vector-icons";
 
@@ -6,16 +6,20 @@ import color from "../color";
 import OrderInfo from "../Components/OrderInfo";
 import OrderItem from "../Components/OrderItem";
 import PlaceOrderModel from "../Components/PlaceOrderModel";
+import { FirebaseContext } from "../../Services/Firebase/firebase.context";
+import CartItems from "../Components/CartItems";
 
 function PlaceOrderScreen() {
+  const { user, cartItems, deliveryAddress } = useContext(FirebaseContext);
+  console.log(deliveryAddress);
   return (
     <Box bg={color.subGreen} flex={1} safeArea pt={6}>
       <Box>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           <OrderInfo
             title="CUSTOMER"
-            subTitle="admin Doe"
-            text="admin@example.com"
+            subTitle="Dekaf"
+            text={user.email}
             icon={<FontAwesome name="user" size={30} color={color.white} />}
           />
           <OrderInfo
@@ -33,7 +37,7 @@ function PlaceOrderScreen() {
           <OrderInfo
             title="DELIVER TO"
             subTitle="Address:"
-            text="054 Santa monica st. Cebu city, Cebu"
+            text={deliveryAddress}
             icon={
               <Ionicons name="location-sharp" size={30} color={color.white} />
             }

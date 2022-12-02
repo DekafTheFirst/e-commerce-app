@@ -16,18 +16,12 @@ import { useNavigation } from "@react-navigation/native";
 import { FirebaseContext } from "../../Services/Firebase/firebase.context";
 import LoginScreen from "./LoginScreen";
 function CartScreen() {
-  const { isAuthenticated, cartItems } = useContext(FirebaseContext);
+  const { isAuthenticated, cartItems, cartTotal } = useContext(FirebaseContext);
   const navigation = useNavigation();
 
   function shippingHandler() {
     navigation.navigate("Shipping");
   }
-
-  let sum = 0;
-
-  cartItems.forEach((item) => {
-    sum += item.price * item.qty;
-  });
 
   return (
     <>
@@ -65,7 +59,7 @@ function CartScreen() {
               }}
               flexDirection="row"
             >
-              {`$${sum}`}
+              {`$${cartTotal}`}
             </Button>
           </HStack>
         </Center>

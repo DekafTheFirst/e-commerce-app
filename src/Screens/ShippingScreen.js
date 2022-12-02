@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Text,
   View,
@@ -12,18 +12,45 @@ import {
 import Colors from "../color";
 import Buttone from "../Components/Buttone";
 import { useNavigation } from "@react-navigation/native";
-
-const ShippingInputs = [
-  { label: "CITY", type: "text" },
-  { label: "COUNTRY", type: "text" },
-  { label: "POSTAL CODE", type: "text" },
-  { label: "ADDRESS", type: "text" },
-];
+import { FirebaseContext } from "../../Services/Firebase/firebase.context";
 
 function ShippingScreen() {
   const navigation = useNavigation();
 
+  const { deliveryAddress, setDeliveryAddress } = useContext(FirebaseContext);
+
+  const [deliveryAddressObject, setdeliveryAddressObject] = useState({
+    ADDRESS: "",
+    CITY: "",
+
+    POSTAL_CODE: "",
+    COUNTRY: "",
+  });
+
+  function convertAddressToString() {
+    setDeliveryAddress(
+      `${deliveryAddressObject.ADDRESS}, ${deliveryAddressObject.CITY}, ${deliveryAddressObject.POSTAL_CODE}, ${deliveryAddressObject.COUNTRY}.`
+    );
+  }
+
+  const ShippingInputs = [
+    { identifier: "ADDRESS", label: "ADDRESS", type: "text" },
+    { identifier: "CITY", label: "CITY", type: "text" },
+    { identifier: "POSTAL_CODE", label: "POSTAL CODE", type: "text" },
+    { identifier: "COUNTRY", label: "COUNTRY", type: "text" },
+  ];
+
+  function inputChangedHandler(inputIdentifier, enteredValue) {
+    setdeliveryAddressObject((curInputs) => {
+      return {
+        ...curInputs,
+        [inputIdentifier]: enteredValue,
+      };
+    });
+  }
+
   function checkoutHandler() {
+    convertAddressToString();
     navigation.navigate("Checkout");
   }
 
@@ -60,6 +87,7 @@ function ShippingScreen() {
                     borderWidth: 1,
                     borderColor: Colors.main,
                   }}
+                  onChangeText={inputChangedHandler.bind(this, i.identifier)}
                 />
               </FormControl>
             ))}

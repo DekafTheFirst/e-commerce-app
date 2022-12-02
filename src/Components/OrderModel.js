@@ -9,36 +9,45 @@ import {
   Pressable,
   Image,
 } from "native-base";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { FirebaseContext } from "../../Services/Firebase/firebase.context";
 import color from "../color";
 import Buttone from "../Components/Buttone";
 
-const OrderInfos = [
-  {
-    title: "Products",
-    price: 125.77,
-    color: "black",
-  },
-  {
-    title: "Shipping",
-    price: 34.77,
-    color: "black",
-  },
-  {
-    title: "Tax",
-    price: 23.77,
-    color: "black",
-  },
-  {
-    title: "Total Amount",
-    price: 323.77,
-    color: "main",
-  },
-];
-
 const OrderModel = () => {
-  const [showModel, setShowModel] = useState(false);
   const navigation = useNavigation();
+
+  const [showModel, setShowModel] = useState(false);
+
+  const { cartTotal, cartItems } = useContext(FirebaseContext);
+
+  const totalShipping = 100 * cartItems.length;
+
+  const tax = 50;
+  const totalAmount = cartTotal + totalShipping + tax;
+
+  const OrderInfos = [
+    {
+      title: "Products",
+      price: cartTotal,
+      color: "black",
+    },
+    {
+      title: "Shipping",
+      price: totalShipping,
+      color: "black",
+    },
+    {
+      title: "Tax",
+      price: 23.77,
+      color: "black",
+    },
+    {
+      title: "Total Amount",
+      price: totalAmount,
+      color: "main",
+    },
+  ];
 
   const showTotalHandler = () => {
     setShowModel(!false);

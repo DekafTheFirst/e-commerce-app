@@ -10,26 +10,22 @@ import PlaceOrderScreen from "../../Screens/PlaceOrderScreen";
 import LoginScreen from "../../Screens/LoginScreen";
 import RegisterScreen from "../../Screens/RegisterScreen";
 import NotVerifyScreen from "../../Screens/NotVerifyScreen";
-import AccountNav from "./AccountNav";
 
 const Stack = createNativeStackNavigator();
 
-const StackNav = () => {
+const AccountNav = () => {
   return (
     <Stack.Navigator
-      initialRouteName="Home"
+      initialRouteName="NotVerifyScreen"
       screenOptions={{
         headerShown: false,
       }}
     >
-      <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="Single" component={SingleProductScreen} />
-      <Stack.Screen name="Shipping" component={ShippingScreen} />
-      <Stack.Screen name="Checkout" component={PaymentScreen} />
-      <Stack.Screen name="Placeorder" component={PlaceOrderScreen} />
-      <Stack.Screen name="AccountNav" component={AccountNav} />
+      <Stack.Screen name="NotVerifyScreen" component={NotVerifyScreen} />
+      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Register" component={RegisterScreen} />
     </Stack.Navigator>
   );
 };
 
-export default StackNav;
+export default AccountNav;
