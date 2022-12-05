@@ -11,6 +11,7 @@ import {
 } from "native-base";
 import React, { useContext, useState } from "react";
 import { FirebaseContext } from "../../Services/Firebase/firebase.context";
+import { OrderContext } from "../../Services/Order/order.context";
 import color from "../color";
 import Buttone from "../Components/Buttone";
 
@@ -19,12 +20,12 @@ const OrderModel = () => {
 
   const [showModel, setShowModel] = useState(false);
 
-  const { cartTotal, cartItems } = useContext(FirebaseContext);
+  const { cartTotal, cartItems, setCartItems } = useContext(FirebaseContext);
+  const { paid, setPaid } = useContext(OrderContext);
 
-  const totalShipping = 100 * cartItems.length;
+  const totalShipping = 30000 * cartItems.length;
 
-  const tax = 50;
-  const totalAmount = cartTotal + totalShipping + tax;
+  const totalAmount = cartTotal + totalShipping;
 
   const OrderInfos = [
     {
@@ -38,11 +39,6 @@ const OrderModel = () => {
       color: "black",
     },
     {
-      title: "Tax",
-      price: 23.77,
-      color: "black",
-    },
-    {
       title: "Total Amount",
       price: totalAmount,
       color: "main",
@@ -53,7 +49,14 @@ const OrderModel = () => {
     setShowModel(!false);
   };
 
+  const processPayment = () => {
+    setPaid(true);
+    setShowModel(false);
+  };
+
   const closeTotalHandler = () => {
+    setCartItems([]);
+
     navigation.navigate("Home");
     setShowModel(false);
   };
@@ -92,23 +95,26 @@ const OrderModel = () => {
             </VStack>
           </Modal.Body>
           <Modal.Footer>
-            <Pressable
-              w="full"
-              justifyContent="center"
-              bg={color.paypal}
-              h={45}
-              onPress={closeTotalHandler}
-              rounded={3}
-              overflow="hidden"
-            >
-              <Image
-                source={require("../../assets/paypal.png")}
-                alt="paypal"
-                resizeMode="contain"
+            {!paid && (
+              <Pressable
                 w="full"
-                h={34}
-              />
-            </Pressable>
+                justifyContent="center"
+                bg={color.paypal}
+                h={45}
+                onPress={processPayment}
+                rounded={3}
+                overflow="hidden"
+              >
+                <Image
+                  source={require("../../assets/paypal.png")}
+                  alt="paypal"
+                  resizeMode="contain"
+                  w="full"
+                  h={34}
+                />
+              </Pressable>
+            )}
+
             <Button
               w="full"
               mt={2}

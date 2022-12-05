@@ -11,7 +11,6 @@ import CartItems from "../Components/CartItems";
 
 function PlaceOrderScreen() {
   const { user, cartItems, deliveryAddress } = useContext(FirebaseContext);
-  console.log(deliveryAddress);
   return (
     <Box bg={color.subGreen} flex={1} safeArea pt={6}>
       <Box>

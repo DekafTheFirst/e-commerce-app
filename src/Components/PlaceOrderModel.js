@@ -1,41 +1,58 @@
 import { useNavigation } from "@react-navigation/native";
+import moment from "moment/moment";
 import { Center, HStack, Modal, Text, VStack, Button } from "native-base";
 import React, { useState } from "react";
+import { useContext } from "react";
+import { FirebaseContext } from "../../Services/Firebase/firebase.context";
+import { OrderContext } from "../../Services/Order/order.context";
 import color from "../color";
 import Buttone from "../Components/Buttone";
 
-const OrderInfos = [
-  {
-    title: "Products",
-    price: 125.77,
-    color: "black",
-  },
-  {
-    title: "Shipping",
-    price: 34.77,
-    color: "black",
-  },
-  {
-    title: "Tax",
-    price: 23.77,
-    color: "black",
-  },
-  {
-    title: "Total Amount",
-    price: 323.77,
-    color: "main",
-  },
-];
-
 const PlaceOrderModel = () => {
-  const [showModel, setShowModel] = useState(false);
   const navigation = useNavigation();
+
+  const [showModel, setShowModel] = useState(false);
+
+  const { cartItems, cartTotal } = useContext(FirebaseContext);
+
+  const { orders, setOrders } = useContext(OrderContext);
+
+  const shippingFee = 30000 * cartItems.length;
+
+  const OrderInfos = [
+    {
+      title: "Products",
+      price: cartTotal,
+      color: "black",
+    },
+    {
+      title: "Shipping",
+      price: shippingFee,
+      color: "black",
+    },
+
+    {
+      title: "Total Amount",
+      price: cartTotal + shippingFee,
+      color: "main",
+    },
+  ];
 
   const showTotalHandler = () => {
     setShowModel(!false);
   };
 
-  const closeTotalHandler = () => {
+  const placeOrder = () => {
+    setOrders(() => [
+      ...orders,
+      {
+        items: cartItems,
+        paid: true,
+        paidOn: moment().format("LL"),
+        total: cartTotal,
+      },
+    ]);
+
     navigation.navigate("Order");
     setShowModel(false);
   };
@@ -50,7 +67,7 @@ const PlaceOrderModel = () => {
       >
         SHOW TOTAL
       </Buttone>
-      <Modal isOpen={showModel} onClose={closeTotalHandler} size="lg">
+      <Modal isOpen={showModel} onClose={placeOrder} size="lg">
         <Modal.Content maxWidth="350">
           {/* <Modal.CloseButton /> */}
           <Modal.Header>Order</Modal.Header>
@@ -80,7 +97,7 @@ const PlaceOrderModel = () => {
               h={45}
               _text={{ color: color.white }}
               _pressed={{ bg: color.main }}
-              onPress={closeTotalHandler}
+              onPress={placeOrder}
             >
               PLACE AN ORDER
             </Button>

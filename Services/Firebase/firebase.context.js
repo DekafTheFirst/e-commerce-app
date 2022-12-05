@@ -17,16 +17,15 @@ export const FirebaseContextProvider = ({ children }) => {
   const [deliveryAddress, setDeliveryAddress] = useState(
     "Deca Homes, Cebu, 6000, Philippines"
   );
-  const [cartTotal, setCartTotal] = useState(0);
+  const taxRate = 20;
 
-  let sum = 0;
-
-  cartItems.forEach((item) => {
-    sum += item.price * item.qty;
-  });
-  useEffect(() => {
-    setCartTotal(sum);
-  }, [cartItems]);
+  let cartTotal = 0;
+  if (cartItems.length > 0) {
+    cartItems.forEach((item) => {
+      const itemPricePlusTax = item.price + item.price / taxRate;
+      cartTotal += itemPricePlusTax * item.qty;
+    });
+  }
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -103,6 +102,7 @@ export const FirebaseContextProvider = ({ children }) => {
       getProducts();
     }
   }, []);
+
   return (
     <FirebaseContext.Provider
       value={{
@@ -116,6 +116,8 @@ export const FirebaseContextProvider = ({ children }) => {
         onLogout,
         products,
         cartItems,
+        cartTotal,
+        taxRate,
         setCartItems,
         deliveryAddress,
         setDeliveryAddress,

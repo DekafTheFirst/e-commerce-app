@@ -18,7 +18,7 @@ import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 export default function CartItems() {
-  const { cartItems, setCartItems } = useContext(FirebaseContext);
+  const { cartItems, setCartItems, products } = useContext(FirebaseContext);
   const navigation = useNavigation();
 
   function onAddQuantity(thisItem) {

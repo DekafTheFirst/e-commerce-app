@@ -12,6 +12,7 @@ import PaymentScreen from "./src/Screens/PaymentScreen";
 import PlaceOrderScreen from "./src/Screens/PlaceOrderScreen";
 import { FirebaseContextProvider } from "./Services/Firebase/firebase.context";
 import { LogBox } from "react-native";
+import { OrderContextProvider } from "./Services/Order/order.context";
 
 const Stack = createNativeStackNavigator();
 
@@ -19,20 +20,22 @@ export default function App() {
   return (
     <FirebaseContextProvider>
       <NativeBaseProvider>
-        <NavigationContainer>
-          <StatusBar hidden={false} />
+        <OrderContextProvider>
+          <NavigationContainer>
+            <StatusBar hidden={false} />
 
-          <Stack.Navigator
-            initialRouteName="Bottom"
-            screenOptions={{
-              headerShown: false,
-            }}
-          >
-            <Stack.Screen name="Register" component={RegisterScreen} />
-            <Stack.Screen name="Order" component={OrderScreen} />
-            <Stack.Screen name="Bottom" component={BottomNav} />
-          </Stack.Navigator>
-        </NavigationContainer>
+            <Stack.Navigator
+              initialRouteName="Bottom"
+              screenOptions={{
+                headerShown: false,
+              }}
+            >
+              <Stack.Screen name="Register" component={RegisterScreen} />
+              <Stack.Screen name="Order" component={OrderScreen} />
+              <Stack.Screen name="Bottom" component={BottomNav} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </OrderContextProvider>
       </NativeBaseProvider>
     </FirebaseContextProvider>
   );

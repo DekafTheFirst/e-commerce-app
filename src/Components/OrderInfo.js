@@ -1,8 +1,12 @@
+import moment from "moment/moment";
 import { Center, Heading, Text } from "native-base";
 import React from "react";
+import { useContext } from "react";
+import { OrderContext } from "../../Services/Order/order.context";
 import color from "../color";
 
 const OrderInfo = ({ icon, title, subTitle, text, success, danger }) => {
+  const { paid } = useContext(OrderContext);
   return (
     <Center
       bg={color.white}
@@ -31,7 +35,8 @@ const OrderInfo = ({ icon, title, subTitle, text, success, danger }) => {
       {success && (
         <Center py={2} mt={2} rounded={5} w="full" bg={color.blue}>
           <Text fontSize={12} color={color.black}>
-            Paid on Nov 22 2022
+            {paid ? `Paid on ${moment().format("LL")}` : `UNPAID`}
+            {/* {} */}
           </Text>
         </Center>
       )}

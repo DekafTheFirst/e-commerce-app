@@ -5,10 +5,10 @@ import Colors from "../../color";
 import Buttone from "../Buttone";
 import { FirebaseContext } from "../../../Services/Firebase/firebase.context";
 import { AntDesign } from "@expo/vector-icons";
+import { OrderContext } from "../../../Services/Order/order.context";
 
 export default function Profile() {
   const { onLogout, user } = useContext(FirebaseContext);
-
   const Inputs = [
     {
       label: "USERNAME",

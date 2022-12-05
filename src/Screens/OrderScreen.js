@@ -6,8 +6,17 @@ import color from "../color";
 import OrderInfo from "../Components/OrderInfo";
 import OrderItem from "../Components/OrderItem";
 import OrderModel from "../Components/OrderModel";
+import { FirebaseContext } from "../../Services/Firebase/firebase.context";
+import { useContext } from "react";
+import {
+  OrderContext,
+  OrderContextProvider,
+} from "../../Services/Order/order.context";
 
 function OrderScreen() {
+  const { deliveryAddress } = useContext(FirebaseContext);
+  const { paid } = useContext(OrderContext);
+
   return (
     <Box bg={color.subGreen} flex={1} safeArea pt={6}>
       <Box>
@@ -29,7 +38,7 @@ function OrderScreen() {
             title="DELIVER TO"
             danger
             subTitle="Address:"
-            text="054 Santa monica st. Cebu city, Cebu"
+            text={deliveryAddress}
             icon={
               <Ionicons name="location-sharp" size={30} color={color.white} />
             }

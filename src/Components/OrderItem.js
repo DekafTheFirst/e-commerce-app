@@ -15,7 +15,8 @@ import color from "../color";
 import { FirebaseContext } from "../../Services/Firebase/firebase.context";
 
 const OrderItem = () => {
-  const { user, cartItems, deliveryAddress } = useContext(FirebaseContext);
+  const { user, cartItems, deliveryAddress, taxRate } =
+    useContext(FirebaseContext);
 
   return (
     <FlatList
@@ -32,7 +33,7 @@ const OrderItem = () => {
               rounded={10}
               overflow="hidden"
             >
-              <Center w="25%" bg={color.deepGray}>
+              <Center w="30%" bg={color.deepGray} px={2}>
                 <Image
                   source={{ uri: item.image }}
                   alt={item.name}
@@ -41,12 +42,12 @@ const OrderItem = () => {
                   resizeMode="contain"
                 />
               </Center>
-              <VStack w="60%" px={2}>
+              <VStack w="55%" px={2}>
                 <Text isTruncated color={color.black} bold fontSize={12}>
                   {item.name}
                 </Text>
                 <Text color={color.lightBlack} bold mt={2}>
-                  {item.price}
+                  {item.price + item.price / taxRate}
                 </Text>
               </VStack>
               <Center>
