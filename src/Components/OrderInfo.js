@@ -1,12 +1,18 @@
 import moment from "moment/moment";
 import { Center, Heading, Text } from "native-base";
 import React from "react";
+import { useEffect } from "react";
 import { useContext } from "react";
 import { OrderContext } from "../../Services/Order/order.context";
 import color from "../color";
 
-const OrderInfo = ({ icon, title, subTitle, text, success, danger }) => {
-  const { paid } = useContext(OrderContext);
+const OrderInfo = ({ icon, title, subTitle, text, success, danger, order }) => {
+  useEffect(() => {
+    console.log(order);
+  });
+
+  console.log(order);
+  const paid = true;
   return (
     <Center
       bg={color.white}
@@ -43,7 +49,7 @@ const OrderInfo = ({ icon, title, subTitle, text, success, danger }) => {
       {danger && (
         <Center py={2} mt={2} rounded={5} w="full" bg={color.red}>
           <Text fontSize={12} color={color.black}>
-            Not Deliver
+            Not Delivered
           </Text>
         </Center>
       )}

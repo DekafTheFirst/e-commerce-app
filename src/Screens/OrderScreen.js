@@ -13,10 +13,9 @@ import {
   OrderContextProvider,
 } from "../../Services/Order/order.context";
 
-function OrderScreen() {
-  const { deliveryAddress } = useContext(FirebaseContext);
-  const { paid } = useContext(OrderContext);
-
+function OrderScreen({ route }) {
+  const order = route.params;
+  console.log("in order screen", order.items[0]);
   return (
     <Box bg={color.subGreen} flex={1} safeArea pt={6}>
       <Box>
@@ -33,12 +32,13 @@ function OrderScreen() {
                 color={color.white}
               />
             }
+            order={order}
           />
           <OrderInfo
             title="DELIVER TO"
             danger
             subTitle="Address:"
-            text={deliveryAddress}
+            text={order.deliveryAddress}
             icon={
               <Ionicons name="location-sharp" size={30} color={color.white} />
             }

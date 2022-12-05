@@ -13,11 +13,12 @@ import Colors from "../color";
 import Buttone from "../Components/Buttone";
 import { useNavigation } from "@react-navigation/native";
 import { FirebaseContext } from "../../Services/Firebase/firebase.context";
+import { OrderContext } from "../../Services/Order/order.context";
 
 function ShippingScreen() {
   const navigation = useNavigation();
 
-  const { deliveryAddress, setDeliveryAddress } = useContext(FirebaseContext);
+  const { deliveryAddress, setDeliveryAddress } = useContext(OrderContext);
 
   const [deliveryAddressObject, setdeliveryAddressObject] = useState({
     ADDRESS: "",

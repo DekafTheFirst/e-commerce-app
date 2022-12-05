@@ -3,7 +3,10 @@ import { Box, Button, HStack, Pressable, ScrollView, Text } from "native-base";
 import Colors from "../../color";
 import { useContext } from "react";
 import { OrderContext } from "../../../Services/Order/order.context";
+import { useNavigation } from "@react-navigation/native";
 export default function Orders() {
+  const navigation = useNavigation();
+
   const { orders } = useContext(OrderContext);
 
   return (
@@ -11,7 +14,10 @@ export default function Orders() {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Paid Order */}
         {orders.map((order, id) => (
-          <Pressable key={id}>
+          <Pressable
+            onPress={() => navigation.navigate("Order", order)}
+            key={id}
+          >
             <HStack
               space={4}
               justifyContent="space-between"

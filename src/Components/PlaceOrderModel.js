@@ -13,9 +13,10 @@ const PlaceOrderModel = () => {
 
   const [showModel, setShowModel] = useState(false);
 
-  const { cartItems, cartTotal } = useContext(FirebaseContext);
+  const { cartItems, cartTotal, setCartItems } = useContext(FirebaseContext);
 
-  const { orders, setOrders } = useContext(OrderContext);
+  const { orders, setOrders, deliveryAddress, setDeliveryAddress } =
+    useContext(OrderContext);
 
   const shippingFee = 30000 * cartItems.length;
 
@@ -43,17 +44,16 @@ const PlaceOrderModel = () => {
   };
 
   const placeOrder = () => {
-    setOrders(() => [
-      ...orders,
-      {
-        items: cartItems,
-        paid: true,
-        paidOn: moment().format("LL"),
-        total: cartTotal,
-      },
-    ]);
-
-    navigation.navigate("Order");
+    const order = {
+      items: cartItems,
+      paid: true,
+      paidOn: moment().format("LL"),
+      total: cartTotal,
+      deliveryAddress,
+    };
+    setOrders(() => [...orders, order]);
+    setCartItems([]);
+    navigation.navigate("Order", order);
     setShowModel(false);
   };
 

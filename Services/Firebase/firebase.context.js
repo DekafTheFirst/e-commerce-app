@@ -14,9 +14,7 @@ export const FirebaseContextProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
-  const [deliveryAddress, setDeliveryAddress] = useState(
-    "Deca Homes, Cebu, 6000, Philippines"
-  );
+
   const taxRate = 20;
 
   let cartTotal = 0;
@@ -119,8 +117,6 @@ export const FirebaseContextProvider = ({ children }) => {
         cartTotal,
         taxRate,
         setCartItems,
-        deliveryAddress,
-        setDeliveryAddress,
       }}
     >
       {children}

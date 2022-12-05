@@ -5,19 +5,17 @@ import { useState } from "react";
 const OrderContext = createContext();
 
 const OrderContextProvider = ({ children }) => {
-  const [paid, setPaid] = useState(false);
+  const [deliveryAddress, setDeliveryAddress] = useState("");
   const [orders, setOrders] = useState([]);
 
-  useEffect(() => {
-    console.log(orders);
-  }, [orders]);
+  useEffect(() => {}, [orders]);
   return (
     <OrderContext.Provider
       value={{
-        paid,
-        setPaid,
         orders,
         setOrders,
+        deliveryAddress,
+        setDeliveryAddress,
       }}
     >
       {children}
