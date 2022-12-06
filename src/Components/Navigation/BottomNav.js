@@ -19,6 +19,7 @@ import { FirebaseContext } from "../../../Services/Firebase/firebase.context";
 import NotVerifyScreen from "../../Screens/NotVerifyScreen";
 import AccountNav from "./AccountNav";
 import ProfileNav from "./ProfileNav";
+import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 
 const Tab = createBottomTabNavigator();
 
@@ -56,7 +57,7 @@ const BottomNav = () => {
       <Tab.Screen
         name="Main"
         component={StackNav}
-        options={{
+        options={({ route }) => ({
           tabBarIcon: ({ focused }) => (
             <Center>
               {focused ? (
@@ -66,7 +67,13 @@ const BottomNav = () => {
               )}
             </Center>
           ),
-        }}
+          tabBarStyle: ((route) => {
+            const routeName = getFocusedRouteNameFromRoute(route) ?? "";
+            if (routeName !== "Home") {
+              return { display: "none" };
+            }
+          })(route),
+        })}
       />
       {/* CART */}
       <Tab.Screen
@@ -115,17 +122,23 @@ const BottomNav = () => {
       <Tab.Screen
         name="ProfileNav"
         component={isAuthenticated ? ProfileNav : AccountNav}
-        options={{
+        options={({ route }) => ({
           tabBarIcon: ({ focused }) => (
             <Center>
               {focused ? (
-                <FontAwesome name="user" size={24} color={color.main} />
+                <Entypo name="home" size={24} color={color.main} />
               ) : (
-                <AntDesign name="user" size={24} color={color.black} />
+                <AntDesign name="home" size={24} color={color.black} />
               )}
             </Center>
           ),
-        }}
+          tabBarStyle: ((route) => {
+            const routeName = getFocusedRouteNameFromRoute(route) ?? "";
+            if (routeName !== "Home") {
+              return { display: "none" };
+            }
+          })(route),
+        })}
       />
     </Tab.Navigator>
   );

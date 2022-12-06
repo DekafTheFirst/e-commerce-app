@@ -15,6 +15,7 @@ import Buttone from "../Components/Buttone";
 import { useNavigation } from "@react-navigation/native";
 import { FirebaseContext } from "../../Services/Firebase/firebase.context";
 import LoginScreen from "./LoginScreen";
+import { useEffect } from "react";
 function CartScreen() {
   const { isAuthenticated, cartItems, cartTotal, numOfCartItems } =
     useContext(FirebaseContext);

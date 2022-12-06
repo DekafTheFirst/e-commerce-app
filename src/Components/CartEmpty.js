@@ -8,7 +8,7 @@ import { useNavigation } from "@react-navigation/native";
 export default function CartEmpty() {
   const navigation = useNavigation();
   return (
-    <Box flex={1} px={4}>
+    <Box flex={1} px={4} mb={10}>
       <Center h="90%">
         <Center w={200} h={200} bg={Colors.white} rounded="full">
           <FontAwesome name="shopping-basket" size={64} color={Colors.main} />
