@@ -18,6 +18,7 @@ import StackNav from "./StackNav";
 import { FirebaseContext } from "../../../Services/Firebase/firebase.context";
 import NotVerifyScreen from "../../Screens/NotVerifyScreen";
 import AccountNav from "./AccountNav";
+import ProfileNav from "./ProfileNav";
 
 const Tab = createBottomTabNavigator();
 
@@ -112,8 +113,8 @@ const BottomNav = () => {
       />
       {/* PROFILE */}
       <Tab.Screen
-        name="Profile"
-        component={isAuthenticated ? ProfileScreen : AccountNav}
+        name="ProfileNav"
+        component={isAuthenticated ? ProfileNav : AccountNav}
         options={{
           tabBarIcon: ({ focused }) => (
             <Center>

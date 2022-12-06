@@ -15,7 +15,12 @@ export default function Orders() {
         {/* Paid Order */}
         {orders.map((order, id) => (
           <Pressable
-            onPress={() => navigation.navigate("Order", order)}
+            onPress={() => {
+              const viewFromProfile = "viewFromProfile";
+              navigation.navigate("ProfileOrderScreen", {
+                order,
+              });
+            }}
             key={id}
           >
             <HStack

@@ -15,7 +15,7 @@ import {
 import Buttone from "../Components/Buttone";
 
 function OrderScreen({ route }) {
-  const order = route.params;
+  const { order } = route.params;
 
   return (
     <Box bg={color.subGreen} flex={1} safeArea pt={6}>

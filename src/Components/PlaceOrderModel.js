@@ -54,7 +54,7 @@ const PlaceOrderModel = () => {
     };
     setOrders(() => [...orders, order]);
     setCartItems([]);
-    navigation.navigate("Order", order);
+    navigation.navigate("OrderDetails", { order });
     setShowModel(false);
   };
 
