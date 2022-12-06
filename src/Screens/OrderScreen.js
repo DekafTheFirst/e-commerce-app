@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Heading, ScrollView } from "native-base";
+import { Box, Heading, ScrollView, Text } from "native-base";
 import { FontAwesome, FontAwesome5, Ionicons } from "@expo/vector-icons";
 
 import color from "../color";
@@ -12,10 +12,11 @@ import {
   OrderContext,
   OrderContextProvider,
 } from "../../Services/Order/order.context";
+import Buttone from "../Components/Buttone";
 
 function OrderScreen({ route }) {
   const order = route.params;
-  console.log("in order screen", order.items[0]);
+
   return (
     <Box bg={color.subGreen} flex={1} safeArea pt={6}>
       <Box>
@@ -46,13 +47,13 @@ function OrderScreen({ route }) {
         </ScrollView>
         {/* ORDER ITEM */}
       </Box>
-      <Box px={6} flex={1} pb={3}>
+      <Box px={6} flex={1} pb={3} mb={6}>
         <Heading bold fontSize={15} isTruncated my={4}>
           PRODUCTS
         </Heading>
-        <OrderItem />
+        <OrderItem orderItems={order.items} />
         {/* TOTAL */}
-        <OrderModel />
+        <OrderModel order={order} />
       </Box>
     </Box>
   );

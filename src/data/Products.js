@@ -28,6 +28,8 @@ const products = [
     name: "Lamborghini Aventador",
     image:
       "https://www.pngplay.com/wp-content/uploads/12/Lamborghini-PNG-Images-HD.png",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pretium enim vitae tincidunt tempor. Ut ullamcorper aliquam ante, et semper risus iaculis sed. Aenean sit amet ex urna. Pellentesque ultrices sodales neque, id efficitur enim ullamcorper at. Nulla ipsum nunc, vestibulum ut dui id, consequat bibendum tortor. Aliquam quis ex mollis, efficitur magna vitae, dapibus ipsum. Phasellus pretium, mi sit amet vehicula varius, nisl mi efficitur nibh, at rutrum ipsum ipsum in augue. Maecenas pharetra, lectus vitae feugiat pretium, leo odio feugiat est, eu dapibus enim nisl in massa. Vivamus dictum in nulla at lacinia. Nam porttitor imperdiet ipsum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam commodo ut diam egestas malesuada. Quisque id nisi vitae nisl lacinia ornare eget non nunc.",
     price: 5600000,
     countInStock: 6,
     rating: 5,

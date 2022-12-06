@@ -7,12 +7,6 @@ import { OrderContext } from "../../Services/Order/order.context";
 import color from "../color";
 
 const OrderInfo = ({ icon, title, subTitle, text, success, danger, order }) => {
-  useEffect(() => {
-    console.log(order);
-  });
-
-  console.log(order);
-  const paid = true;
   return (
     <Center
       bg={color.white}
@@ -41,7 +35,7 @@ const OrderInfo = ({ icon, title, subTitle, text, success, danger, order }) => {
       {success && (
         <Center py={2} mt={2} rounded={5} w="full" bg={color.blue}>
           <Text fontSize={12} color={color.black}>
-            {paid ? `Paid on ${moment().format("LL")}` : `UNPAID`}
+            {order && order.paid ? `Paid on ${order.paidOn}` : `UNPAID`}
             {/* {} */}
           </Text>
         </Center>

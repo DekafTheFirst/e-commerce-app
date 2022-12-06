@@ -7,20 +7,10 @@ import { FirebaseContext } from "../../Services/Firebase/firebase.context";
 
 export default function HomeSearch() {
   const navigation = useNavigation();
-  const { cartItems } = useContext(FirebaseContext);
+  const { cartItems, numOfCartItems } = useContext(FirebaseContext);
   const navCart = () => {
     navigation.navigate("Cart");
   };
-
-  let numOfCartItems = 0;
-
-  if (cartItems.length > 0) {
-    cartItems.map((item) => {
-      numOfCartItems += item.qty;
-    });
-  } else {
-    numOfCartItems = 0;
-  }
 
   return (
     <HStack

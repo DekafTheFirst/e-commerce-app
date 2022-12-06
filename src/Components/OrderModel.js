@@ -10,27 +10,27 @@ import {
   Image,
 } from "native-base";
 import React, { useContext, useState } from "react";
+import { useEffect } from "react";
 import { FirebaseContext } from "../../Services/Firebase/firebase.context";
 import { OrderContext } from "../../Services/Order/order.context";
 import color from "../color";
 import Buttone from "../Components/Buttone";
 
-const OrderModel = () => {
+const OrderModel = ({ order }) => {
   const navigation = useNavigation();
 
   const [showModel, setShowModel] = useState(false);
 
   const { cartTotal, cartItems, setCartItems } = useContext(FirebaseContext);
-  const { paid, setPaid } = useContext(OrderContext);
 
-  const totalShipping = 30000 * cartItems.length;
+  const totalShipping = 30000 * order.items.length;
 
-  const totalAmount = cartTotal + totalShipping;
+  const totalAmount = order.total + totalShipping;
 
   const OrderInfos = [
     {
       title: "Products",
-      price: cartTotal,
+      price: order.total,
       color: "black",
     },
     {
@@ -45,19 +45,32 @@ const OrderModel = () => {
     },
   ];
 
+  useEffect(() => {
+    const { routes } = navigation.getState();
+    const filteredRoutes = routes.filter((route) => {
+      return (
+        route.name !== "Checkout" &&
+        route.name !== "Placeorder" &&
+        route.name !== "Shipping" &&
+        route.name !== "Single"
+      );
+    });
+
+    navigation.reset({
+      index: filteredRoutes.length - 1,
+      routes: filteredRoutes,
+    });
+  }, []);
+
   const showTotalHandler = () => {
     setShowModel(!false);
   };
 
   const processPayment = () => {
-    setPaid(true);
     setShowModel(false);
   };
 
   const closeTotalHandler = () => {
-    setCartItems([]);
-
-    navigation.navigate("Home");
     setShowModel(false);
   };
 
@@ -69,12 +82,13 @@ const OrderModel = () => {
         color={color.white}
         mt={5}
       >
-        SHOW PAYMENT & TOTAL
+        SHOW DETAILS
       </Buttone>
       <Modal isOpen={showModel} onClose={closeTotalHandler} size="lg">
         <Modal.Content maxWidth="350">
           {/* <Modal.CloseButton /> */}
-          <Modal.Header>Order</Modal.Header>
+
+          <Modal.Header>Order {order.id}</Modal.Header>
           <Modal.Body>
             <VStack space={7}>
               {OrderInfos.map((i, index) => (
@@ -95,7 +109,7 @@ const OrderModel = () => {
             </VStack>
           </Modal.Body>
           <Modal.Footer>
-            {!paid && (
+            {!order.paid && (
               <Pressable
                 w="full"
                 justifyContent="center"
@@ -124,7 +138,7 @@ const OrderModel = () => {
               _pressed={{ bg: color.black }}
               onPress={closeTotalHandler}
             >
-              PAY LATER
+              CLOSE
             </Button>
           </Modal.Footer>
         </Modal.Content>

@@ -39,7 +39,6 @@ export default function CartItems() {
     } else {
       removeItemFromCart(thisItem);
     }
-    console.log(cartItems);
   }
 
   function removeItemFromCart(thisItem) {

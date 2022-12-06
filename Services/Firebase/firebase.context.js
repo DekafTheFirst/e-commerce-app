@@ -14,7 +14,6 @@ export const FirebaseContextProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
-
   const taxRate = 20;
 
   let cartTotal = 0;
@@ -23,6 +22,15 @@ export const FirebaseContextProvider = ({ children }) => {
       const itemPricePlusTax = item.price + item.price / taxRate;
       cartTotal += itemPricePlusTax * item.qty;
     });
+  }
+
+  let numOfCartItems = 0;
+  if (cartItems.length > 0) {
+    cartItems.map((item) => {
+      numOfCartItems += item.qty;
+    });
+  } else {
+    numOfCartItems = 0;
   }
 
   useEffect(() => {
@@ -62,7 +70,6 @@ export const FirebaseContextProvider = ({ children }) => {
     }
     try {
       return await registerRequest(email, password).then(async (res) => {
-        console.log(res);
         const userInfo = {
           displayName: username,
           photoURL:
@@ -115,6 +122,7 @@ export const FirebaseContextProvider = ({ children }) => {
         products,
         cartItems,
         cartTotal,
+        numOfCartItems,
         taxRate,
         setCartItems,
       }}

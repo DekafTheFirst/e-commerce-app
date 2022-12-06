@@ -8,9 +8,11 @@ import OrderItem from "../Components/OrderItem";
 import PlaceOrderModel from "../Components/PlaceOrderModel";
 import { FirebaseContext } from "../../Services/Firebase/firebase.context";
 import CartItems from "../Components/CartItems";
+import { OrderContext } from "../../Services/Order/order.context";
 
 function PlaceOrderScreen() {
-  const { user, cartItems, deliveryAddress } = useContext(FirebaseContext);
+  const { user, cartItems } = useContext(FirebaseContext);
+  const { deliveryAddress } = useContext(OrderContext);
   return (
     <Box bg={color.subGreen} flex={1} safeArea pt={6}>
       <Box>
@@ -44,11 +46,11 @@ function PlaceOrderScreen() {
         </ScrollView>
         {/* ORDER ITEM */}
       </Box>
-      <Box px={6} flex={1} pb={3}>
+      <Box px={6} flex={1} pb={3} mb={6}>
         <Heading bold fontSize={15} isTruncated my={4}>
           PRODUCTS
         </Heading>
-        <OrderItem />
+        <OrderItem cartItems={cartItems} />
         {/* TOTAL */}
         <PlaceOrderModel />
       </Box>

@@ -31,7 +31,6 @@ export default function App() {
               }}
             >
               <Stack.Screen name="Register" component={RegisterScreen} />
-              <Stack.Screen name="Order" component={OrderScreen} />
               <Stack.Screen name="Bottom" component={BottomNav} />
             </Stack.Navigator>
           </NavigationContainer>

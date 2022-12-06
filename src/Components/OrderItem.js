@@ -13,15 +13,15 @@ import React, { useContext } from "react";
 import products from "../data/Products";
 import color from "../color";
 import { FirebaseContext } from "../../Services/Firebase/firebase.context";
+import { OrderContext } from "../../Services/Order/order.context";
 
-const OrderItem = () => {
-  const { user, cartItems, deliveryAddress, taxRate } =
-    useContext(FirebaseContext);
+const OrderItem = ({ cartItems, orderItems }) => {
+  const { taxRate } = useContext(FirebaseContext);
 
   return (
     <FlatList
       showsVerticalScrollIndicator={false}
-      data={cartItems}
+      data={cartItems || orderItems}
       keyExtractor={(item) => item._id}
       renderItem={({ item }) => (
         <Pressable>

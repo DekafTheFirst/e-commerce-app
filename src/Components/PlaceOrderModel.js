@@ -2,6 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import moment from "moment/moment";
 import { Center, HStack, Modal, Text, VStack, Button } from "native-base";
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { useContext } from "react";
 import { FirebaseContext } from "../../Services/Firebase/firebase.context";
 import { OrderContext } from "../../Services/Order/order.context";
@@ -67,7 +68,7 @@ const PlaceOrderModel = () => {
       >
         SHOW TOTAL
       </Buttone>
-      <Modal isOpen={showModel} onClose={placeOrder} size="lg">
+      <Modal isOpen={showModel} onClose={() => setShowModel(false)} size="lg">
         <Modal.Content maxWidth="350">
           {/* <Modal.CloseButton /> */}
           <Modal.Header>Order</Modal.Header>
@@ -99,7 +100,7 @@ const PlaceOrderModel = () => {
               _pressed={{ bg: color.main }}
               onPress={placeOrder}
             >
-              PLACE AN ORDER
+              PLACE ORDER
             </Button>
           </Modal.Footer>
         </Modal.Content>

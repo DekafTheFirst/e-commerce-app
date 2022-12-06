@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Center, Pressable } from "native-base";
+import { Box, Center, Pressable } from "native-base";
 import { View, Text, StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
@@ -39,7 +39,7 @@ const CustomTab = ({ children, onPress }) => {
 };
 
 const BottomNav = () => {
-  const { isAuthenticated } = useContext(FirebaseContext);
+  const { isAuthenticated, numOfCartItems } = useContext(FirebaseContext);
 
   return (
     <Tab.Navigator
@@ -76,17 +76,35 @@ const BottomNav = () => {
           tabBarIcon: ({ focused }) => (
             <Center>
               {focused ? (
-                <FontAwesome5
-                  name="shopping-basket"
-                  size={24}
-                  color={color.white}
-                />
+                <>
+                  <FontAwesome5
+                    name="shopping-basket"
+                    size={24}
+                    color={color.white}
+                  />
+                </>
               ) : (
-                <MaterialCommunityIcons
-                  name="shopping-outline"
-                  size={24}
-                  color={color.white}
-                />
+                <>
+                  <MaterialCommunityIcons
+                    name="shopping-outline"
+                    size={24}
+                    color={color.white}
+                  />
+                  <Box
+                    px={1}
+                    rounded="full"
+                    position="absolute"
+                    top={-13}
+                    left={4}
+                    bg={Colors.red}
+                    _text={{
+                      color: Colors.white,
+                      fontSize: "11px",
+                    }}
+                  >
+                    {numOfCartItems}
+                  </Box>
+                </>
               )}
             </Center>
           ),
