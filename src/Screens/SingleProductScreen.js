@@ -46,7 +46,7 @@ function SingleProductScreen({ route }) {
   }
 
   return (
-    <Box safeArea flex={1} bg={Colors.white}>
+    <Box safeAreaTop flex={1} bg={Colors.white}>
       <ScrollView px={5} showsVerticalScrollIndicator={false}>
         <Image
           source={{

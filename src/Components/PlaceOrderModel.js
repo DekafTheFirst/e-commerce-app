@@ -66,7 +66,7 @@ const PlaceOrderModel = () => {
         color={color.white}
         mt={5}
       >
-        SHOW TOTAL
+        PLACE ORDER
       </Buttone>
       <Modal isOpen={showModel} onClose={() => setShowModel(false)} size="lg">
         <Modal.Content maxWidth="350">

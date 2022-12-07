@@ -17,7 +17,7 @@ export default function Orders() {
           <Pressable
             onPress={() => {
               const viewFromProfile = "viewFromProfile";
-              navigation.navigate("ProfileOrderScreen", {
+              navigation.navigate("OrderDetails", {
                 order,
               });
             }}

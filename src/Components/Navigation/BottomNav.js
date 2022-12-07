@@ -69,8 +69,18 @@ const BottomNav = () => {
           ),
           tabBarStyle: ((route) => {
             const routeName = getFocusedRouteNameFromRoute(route) ?? "";
-            if (routeName !== "Home") {
+            console.log(routeName);
+            if (
+              routeName == "Shipping" ||
+              routeName == "Checkout" ||
+              routeName == "OrderDetails" ||
+              routeName == "Placeorder"
+            ) {
               return { display: "none" };
+            } else {
+              return {
+                height: 60,
+              };
             }
           })(route),
         })}
@@ -121,7 +131,7 @@ const BottomNav = () => {
       {/* PROFILE */}
       <Tab.Screen
         name="ProfileNav"
-        component={isAuthenticated ? ProfileNav : AccountNav}
+        component={isAuthenticated ? ProfileScreen : AccountNav}
         options={({ route }) => ({
           tabBarIcon: ({ focused }) => (
             <Center>
@@ -132,12 +142,6 @@ const BottomNav = () => {
               )}
             </Center>
           ),
-          tabBarStyle: ((route) => {
-            const routeName = getFocusedRouteNameFromRoute(route) ?? "";
-            if (routeName !== "Home") {
-              return { display: "none" };
-            }
-          })(route),
         })}
       />
     </Tab.Navigator>

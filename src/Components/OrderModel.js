@@ -84,6 +84,16 @@ const OrderModel = ({ order }) => {
       >
         SHOW DETAILS
       </Buttone>
+      <Buttone
+        onPress={() => {
+          navigation.navigate("Home");
+        }}
+        bg={color.black}
+        color={color.main}
+        mt={5}
+      >
+        CONTINUE SHOPPING
+      </Buttone>
       <Modal isOpen={showModel} onClose={closeTotalHandler} size="lg">
         <Modal.Content maxWidth="350">
           {/* <Modal.CloseButton /> */}

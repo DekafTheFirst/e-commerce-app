@@ -47,7 +47,7 @@ function OrderScreen({ route }) {
         </ScrollView>
         {/* ORDER ITEM */}
       </Box>
-      <Box px={6} flex={1} pb={3} mb={6}>
+      <Box px={6} flex={1} pb={3} mb={3}>
         <Heading bold fontSize={15} isTruncated my={4}>
           PRODUCTS
         </Heading>
