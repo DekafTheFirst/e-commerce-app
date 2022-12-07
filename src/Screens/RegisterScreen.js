@@ -9,10 +9,12 @@ import {
   Input,
   Button,
   Pressable,
+  Center,
 } from "native-base";
 import Colors from "../color";
 import { MaterialIcons, Ionicons, FontAwesome } from "@expo/vector-icons";
 import { FirebaseContext } from "../../Services/Firebase/firebase.context";
+import { ImageBackground } from "react-native";
 
 function RegisterScreen({ navigation }) {
   const [username, setUsername] = useState("");
@@ -24,87 +26,87 @@ function RegisterScreen({ navigation }) {
 
   return (
     <Box flex={1} bg={Colors.black}>
-      <Image
-        flex={1}
-        alt="Logo"
+      <ImageBackground
         source={require("../../assets/register-background.png")}
-      />
-      <Box
-        w="full"
-        h="full"
-        position="absolute"
-        top="-50"
-        px="6"
-        justifyContent="center"
+        resizeMode="cover"
+        style={{
+          flex: 1,
+          padding: 25,
+        }}
       >
-        <Heading>Sign Up</Heading>
-        <VStack space={6} pt="6">
+        <VStack space={6} pt="6" mt="auto" mb={4}>
+          <Center>
+            <Heading color={Colors.white}>Sign Up</Heading>
+          </Center>
           <Input
             size="md"
             InputLeftElement={
-              <FontAwesome name="user" size={20} color={Colors.black} />
+              <FontAwesome name="user" size={20} color={Colors.white} />
             }
             variant="underlined"
             placeholder="Name"
-            placeholderTextColor={Colors.black}
-            w="70%"
-            p={2}
-            pl={3}
-            mb={3}
-            color={Colors.black}
+            placeholderTextColor={Colors.white}
+            w="100%"
+            p={4}
+            pl={5}
+            mb={1}
+            color={Colors.white}
             borderBottomColor={Colors.underline}
-            borderBottomWidth={0.5}
+            borderBottomWidth={1}
             onChangeText={(text) => setUsername(text)}
           />
           <Input
             size="md"
             InputLeftElement={
-              <MaterialIcons name="email" size={20} color={Colors.black} />
+              <MaterialIcons name="email" size={20} color={Colors.white} />
             }
             variant="underlined"
             placeholder="Email Address"
-            placeholderTextColor={Colors.black}
-            w="70%"
-            pl={2}
-            mb={3}
-            color={Colors.main}
+            placeholderTextColor={Colors.white}
+            w="100%"
+            pl={4}
+            mb={1}
             onChangeText={(text) => setEmail(text)}
+            p={4}
+            color={Colors.white}
             borderBottomColor={Colors.underline}
-            borderBottomWidth={0.5}
+            borderBottomWidth={1}
           />
           <Input
             size="md"
             InputLeftElement={
-              <Ionicons name="eye" size={20} color={Colors.black} />
+              <Ionicons name="eye" size={20} color={Colors.white} />
             }
             variant="underlined"
             placeholder="Enter Password"
-            placeholderTextColor={Colors.black}
+            placeholderTextColor={Colors.white}
             type="password"
-            w="70%"
-            pl={2}
-            mb={3}
-            color={Colors.main}
+            w="100%"
+            p={4}
+            pl={4}
+            mb={1}
+            color={Colors.white}
             onChangeText={(text) => setPassword(text)}
             borderBottomColor={Colors.underline}
-            borderBottomWidth={0.5}
+            borderBottomWidth={1}
           />
 
           <Input
             size="md"
             InputLeftElement={
-              <Ionicons name="eye" size={20} color={Colors.black} />
+              <Ionicons name="eye" size={20} color={Colors.white} />
             }
             variant="underlined"
             placeholder="Confirm password"
-            placeholderTextColor={Colors.black}
+            placeholderTextColor={Colors.white}
             type="password"
-            w="70%"
+            w="100%"
+            p={4}
             pl={2}
             color={Colors.main}
             onChangeText={(text) => setRepeatedPassword(text)}
             borderBottomColor={Colors.underline}
-            borderBottomWidth={0.5}
+            borderBottomWidth={1}
           />
         </VStack>
         <Button
@@ -116,7 +118,7 @@ function RegisterScreen({ navigation }) {
           rounded={50}
           bg={Colors.main}
           _text={{
-            color: Colors.black,
+            color: Colors.white,
             fontWeight: "bold",
             fontSize: 16,
           }}
@@ -126,10 +128,12 @@ function RegisterScreen({ navigation }) {
         >
           Sign up
         </Button>
-        <Pressable mt={4} onPress={() => navigation.navigate("Login")}>
-          <Text color={Colors.deepestGray}>LOGIN</Text>
-        </Pressable>
-      </Box>
+        <Center>
+          <Pressable onPress={() => navigation.navigate("Login")}>
+            <Text color={Colors.black}>LOGIN</Text>
+          </Pressable>
+        </Center>
+      </ImageBackground>
     </Box>
   );
 }

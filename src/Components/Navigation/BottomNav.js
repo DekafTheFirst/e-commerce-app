@@ -7,6 +7,7 @@ import {
   Entypo,
   FontAwesome,
   FontAwesome5,
+  Ionicons,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
 
@@ -20,6 +21,7 @@ import NotVerifyScreen from "../../Screens/NotVerifyScreen";
 import AccountNav from "./AccountNav";
 import ProfileNav from "./ProfileNav";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
+import MaterialIcons from "@expo/vector-icons/build/MaterialIcons";
 
 const Tab = createBottomTabNavigator();
 
@@ -131,17 +133,26 @@ const BottomNav = () => {
       {/* PROFILE */}
       <Tab.Screen
         name="ProfileNav"
-        component={isAuthenticated ? ProfileScreen : AccountNav}
+        component={isAuthenticated ? ProfileScreen : ProfileNav}
         options={({ route }) => ({
           tabBarIcon: ({ focused }) => (
             <Center>
               {focused ? (
-                <Entypo name="home" size={24} color={color.main} />
+                <Ionicons name="person" size={24} color="black" />
               ) : (
-                <AntDesign name="home" size={24} color={color.black} />
+                <Ionicons name="person-outline" size={24} color="black" />
               )}
             </Center>
           ),
+          tabBarStyle: ((route) => {
+            const routeName = getFocusedRouteNameFromRoute(route) ?? "";
+            console.log(routeName);
+            if (routeName !== "Profile" && routeName !== "NotVerified") {
+              return { display: "none" };
+            } else {
+              return { height: 60 };
+            }
+          })(route),
         })}
       />
     </Tab.Navigator>
