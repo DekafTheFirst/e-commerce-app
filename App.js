@@ -11,7 +11,7 @@ import BottomNav from "./src/Components/Navigation/BottomNav";
 import PaymentScreen from "./src/Screens/PaymentScreen";
 import PlaceOrderScreen from "./src/Screens/PlaceOrderScreen";
 import { FirebaseContextProvider } from "./Services/Firebase/firebase.context";
-import { LogBox } from "react-native";
+import { Keyboard, LogBox, TouchableWithoutFeedback } from "react-native";
 import { OrderContextProvider } from "./Services/Order/order.context";
 
 const Stack = createNativeStackNavigator();

@@ -7,12 +7,9 @@ import SingleProductScreen from "../../Screens/SingleProductScreen";
 import ShippingScreen from "../../Screens/ShippingScreen";
 import PaymentScreen from "../../Screens/PaymentScreen";
 import PlaceOrderScreen from "../../Screens/PlaceOrderScreen";
-import LoginScreen from "../../Screens/LoginScreen";
-import RegisterScreen from "../../Screens/RegisterScreen";
-import NotVerifyScreen from "../../Screens/NotVerifyScreen";
+
 import AccountNav from "./AccountNav";
 import OrderScreen from "../../Screens/OrderScreen";
-import BottomNav from "./BottomNav";
 
 const Stack = createNativeStackNavigator();
 

@@ -9,88 +9,112 @@ import {
   Input,
   Button,
   Pressable,
+  Center,
 } from "native-base";
 import Colors from "../color";
 import { MaterialIcons, Ionicons } from "@expo/vector-icons";
 import { FirebaseContext } from "../../Services/Firebase/firebase.context";
 import { useNavigation } from "@react-navigation/native";
+import {
+  ImageBackground,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from "react-native";
 
 function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { onLogin, error } = useContext(FirebaseContext);
+  const { onLogin, loginError } = useContext(FirebaseContext);
 
   // const navigation = useNavigation();
 
   return (
-    <Box flex={1} bg={Colors.black}>
-      <Image
-        flex={1}
-        alt="Logo"
-        source={require("../../assets/register-background.png")}
-      />
-      <Box
-        w="full"
-        h="full"
-        position="absolute"
-        top="-50"
-        px="6"
-        justifyContent="center"
-      >
-        <Heading>LOGIN</Heading>
-        <VStack space={6} pt="6">
-          <Input
-            InputLeftElement={
-              <MaterialIcons name="email" size={24} color={Colors.main} />
-            }
-            variant="underlined"
-            placeholder="user@gmail.com"
-            w="70%"
-            pl={2}
-            color={Colors.main}
-            onChangeText={(text) => setEmail(text)}
-            borderBottomColor={Colors.underline}
-          />
-          <Input
-            InputLeftElement={
-              <Ionicons name="eye" size={24} color={Colors.main} />
-            }
-            variant="underlined"
-            placeholder="**********"
-            type="password"
-            w="70%"
-            pl={2}
-            color={Colors.main}
-            onChangeText={(text) => {
-              setPassword(text);
-            }}
-            borderBottomColor={Colors.underline}
-          />
-        </VStack>
-        <Text color={Colors.red} pt={2}>
-          {error}
-        </Text>
-        <Button
-          _pressed={{
-            bg: Colors.main,
-          }}
-          my={30}
-          w="40%"
-          rounded={50}
-          bg={Colors.main}
-          onPress={() => onLogin(email, password)}
-          _text={{
-            color: Colors.white,
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <Box flex={1}>
+        <ImageBackground
+          source={require("../../assets/register-background.png")}
+          resizeMode="cover"
+          style={{
+            flex: 1,
+            padding: 25,
           }}
         >
-          LOGIN
-        </Button>
-        <Pressable mt={4} onPress={() => navigation.navigate("Register")}>
-          <Text color={Colors.deepestGray}>SIGN UP</Text>
-        </Pressable>
+          <VStack space={6} pt="6" my="auto">
+            <Center>
+              <Heading>LOGIN</Heading>
+            </Center>
+            <Input
+              size="md"
+              InputLeftElement={
+                <MaterialIcons name="email" size={20} color={Colors.white} />
+              }
+              variant="underlined"
+              placeholder="Email Address"
+              placeholderTextColor={Colors.white}
+              w="100%"
+              pl={4}
+              mb={1}
+              onChangeText={(text) => setEmail(text)}
+              p={4}
+              color={Colors.white}
+              borderBottomColor={Colors.underline}
+              borderBottomWidth={1}
+            />
+            <Input
+              size="md"
+              InputLeftElement={
+                <Ionicons name="eye" size={20} color={Colors.white} />
+              }
+              variant="underlined"
+              placeholder="Enter Password"
+              placeholderTextColor={Colors.white}
+              type="password"
+              w="100%"
+              p={4}
+              pl={4}
+              mb={1}
+              color={Colors.white}
+              onChangeText={(text) => setPassword(text)}
+              borderBottomColor={Colors.underline}
+              borderBottomWidth={1}
+            />
+            <View>
+              <Text color={Colors.red} pt={2}>
+                {loginError}
+              </Text>
+              <Button
+                _pressed={{
+                  bg: Colors.main,
+                }}
+                p={4}
+                my={30}
+                rounded={50}
+                bg={Colors.main}
+                _text={{
+                  color: Colors.white,
+                  fontWeight: "bold",
+                  fontSize: 16,
+                }}
+                onPress={() => onLogin(email, password)}
+              >
+                Login
+              </Button>
+            </View>
+          </VStack>
+          <Text mx="auto" mt="auto">
+            Don't have an account yet?
+            <Text> </Text>
+            <Text
+              color={Colors.main}
+              onPress={() => navigation.navigate("Register")}
+            >
+              Register
+            </Text>
+          </Text>
+        </ImageBackground>
       </Box>
-    </Box>
+    </TouchableWithoutFeedback>
   );
 }
 

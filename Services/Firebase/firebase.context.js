@@ -1,5 +1,5 @@
 import { onAuthStateChanged, signOut, updateProfile } from "firebase/auth";
-import { collection, doc, getDocs, setDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, setDoc } from "firebase/firestore";
 import React, { useState, createContext, useEffect } from "react";
 import { auth, db } from "./firebase.service";
 import { loginRequest } from "./firebase.service";
@@ -11,7 +11,8 @@ export const FirebaseContextProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoggedOut, setIsLoggedOut] = useState(false);
   const [user, setUser] = useState(null);
-  const [error, setError] = useState(null);
+  const [loginError, setLoginError] = useState(null);
+  const [registerError, setRegisterError] = useState(null);
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
   const taxRate = 20;
@@ -38,6 +39,7 @@ export const FirebaseContextProvider = ({ children }) => {
       setIsLoading(true);
       if (user) {
         setUser(user);
+
         setIsLoading(false);
       } else {
         setIsLoading(false);
@@ -55,7 +57,7 @@ export const FirebaseContextProvider = ({ children }) => {
       })
       .catch((e) => {
         setIsLoading(false);
-        setError(e.message);
+        setLoginError(e.message);
       });
   };
 
@@ -66,23 +68,41 @@ export const FirebaseContextProvider = ({ children }) => {
 
   const onRegister = async (email, password, repeatedPasswprd, username) => {
     if (password !== repeatedPasswprd) {
-      setError("Password doesn't match repeated password");
+      setRegisterError("Password doesn't match repeated password");
     }
-    try {
-      return await registerRequest(email, password).then(async (res) => {
+    registerRequest(email, password)
+      .then((res) => {
         const userInfo = {
           displayName: username,
           photoURL:
             "https://www.pngplay.com/wp-content/uploads/9/Mclaren-P1-PNG-Images-HD.png",
+          cart: [],
+          orders: [],
         };
         // Add user account information in Firestore to be retrieved later.
-        await setDoc(doc(db, "users", res.user.id), userInfo);
-        console.log("saved successfully");
+        setDoc(doc(db, "users", res.user.uid), userInfo);
+      })
+      .catch((e) => {
+        console.log(e);
       });
-    } catch (e) {
-      setError(e.message);
-    }
   };
+
+  useEffect(() => {
+    const getUserData = async () => {
+      if (user) {
+        try {
+          const userData = await getDoc(doc(db, "users", user.uid)).then(
+            (userData) => {
+              setUser({ ...user, data: userData.data() });
+            }
+          );
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+    getUserData();
+  }, [user]);
 
   const getProducts = async () => {
     setIsLoading(true);
@@ -115,7 +135,8 @@ export const FirebaseContextProvider = ({ children }) => {
         user,
         isLoading,
         isLoggedOut,
-        error,
+        loginError,
+        registerError,
         onLogin,
         onRegister,
         onLogout,

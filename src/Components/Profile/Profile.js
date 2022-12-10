@@ -6,6 +6,7 @@ import Buttone from "../Buttone";
 import { FirebaseContext } from "../../../Services/Firebase/firebase.context";
 import { AntDesign } from "@expo/vector-icons";
 import { OrderContext } from "../../../Services/Order/order.context";
+import { updateProfile } from "firebase/auth";
 
 export default function Profile() {
   const { onLogout, user } = useContext(FirebaseContext);
@@ -13,7 +14,7 @@ export default function Profile() {
     {
       label: "USERNAME",
       type: "text",
-      defaultValue: user.displayName,
+      defaultValue: user.data.displayName,
     },
     { label: "EMAIL", type: "text", defaultValue: user.email },
     { label: "NEW PASSWORD", type: "password", defaultValue: user.password },
@@ -23,6 +24,11 @@ export default function Profile() {
       defaultValue: user.password,
     },
   ];
+
+  function updateProfile() {
+    console.log(user);
+  }
+
   return (
     <Box h="full" bg={Colors.white} px={5}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -54,7 +60,11 @@ export default function Profile() {
               />
             </FormControl>
           ))}
-          <Buttone bg={Colors.main} color={Colors.white}>
+          <Buttone
+            bg={Colors.main}
+            color={Colors.white}
+            onPress={updateProfile}
+          >
             UPDATE PROFILE
           </Buttone>
           <Buttone

@@ -71,7 +71,6 @@ const BottomNav = () => {
           ),
           tabBarStyle: ((route) => {
             const routeName = getFocusedRouteNameFromRoute(route) ?? "";
-            console.log(routeName);
             if (
               routeName == "Shipping" ||
               routeName == "Checkout" ||
@@ -146,8 +145,11 @@ const BottomNav = () => {
           ),
           tabBarStyle: ((route) => {
             const routeName = getFocusedRouteNameFromRoute(route) ?? "";
-            console.log(routeName);
-            if (routeName !== "Profile" && routeName !== "NotVerified") {
+            if (
+              routeName !== "Profile" &&
+              routeName !== "NotVerified" &&
+              routeName !== ""
+            ) {
               return { display: "none" };
             } else {
               return { height: 60 };
