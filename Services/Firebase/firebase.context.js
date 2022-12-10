@@ -1,6 +1,7 @@
 import { onAuthStateChanged, signOut, updateProfile } from "firebase/auth";
 import { collection, doc, getDoc, getDocs, setDoc } from "firebase/firestore";
 import React, { useState, createContext, useEffect } from "react";
+import { useRef } from "react";
 import { auth, db } from "./firebase.service";
 import { loginRequest } from "./firebase.service";
 import { registerRequest } from "./firebase.service";
@@ -9,8 +10,17 @@ export const FirebaseContext = createContext();
 
 export const FirebaseContextProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [userDataIsLoading, setUserDataIsLoading] = useState(false);
+
   const [isLoggedOut, setIsLoggedOut] = useState(false);
   const [user, setUser] = useState(null);
+
+  const userAvailableRef = useRef(false);
+
+  useEffect(() => {
+    console.log(userDataIsLoading);
+  }, [userDataIsLoading]);
+
   const [loginError, setLoginError] = useState(null);
   const [registerError, setRegisterError] = useState(null);
   const [products, setProducts] = useState([]);
@@ -62,7 +72,8 @@ export const FirebaseContextProvider = ({ children }) => {
   };
 
   const onLogout = () => {
-    setUser(null);
+    setUser("being logged out");
+    setIsLoggedOut(true);
     signOut(auth);
   };
 
@@ -89,16 +100,24 @@ export const FirebaseContextProvider = ({ children }) => {
 
   useEffect(() => {
     const getUserData = async () => {
-      if (user) {
+      console.log("rn user is: ", user);
+      if (!userAvailableRef.current && user) {
+        setUserDataIsLoading(true);
+        userAvailableRef.current = true;
         try {
-          const userData = await getDoc(doc(db, "users", user.uid)).then(
-            (userData) => {
+          const userData = await getDoc(doc(db, "users", user.uid))
+            .then((userData) => {
               setUser({ ...user, data: userData.data() });
-            }
-          );
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+          setUserDataIsLoading(false);
         } catch (error) {
+          setUserDataIsLoading(false);
           console.log(error);
         }
+        setUserDataIsLoading(false);
       }
     };
     getUserData();
@@ -133,6 +152,7 @@ export const FirebaseContextProvider = ({ children }) => {
       value={{
         isAuthenticated: !!user,
         user,
+        userDataIsLoading,
         isLoading,
         isLoggedOut,
         loginError,
