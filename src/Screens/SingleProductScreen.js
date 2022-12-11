@@ -20,7 +20,7 @@ import { FirebaseContext } from "../../Services/Firebase/firebase.context";
 
 function SingleProductScreen({ route }) {
   const [value, setValue] = useState(1);
-  const { cartItems, setCartItems, isAuthenticated } =
+  const { user, cartItems, setCartItems, isAuthenticated } =
     useContext(FirebaseContext);
 
   const navigation = useNavigation();
@@ -28,16 +28,16 @@ function SingleProductScreen({ route }) {
 
   function addCartHandler() {
     if (isAuthenticated) {
-      const exist = cartItems.find((x) => x._id === product._id);
+      const exist = user.cart.find((x) => x._id === product._id);
       if (exist) {
         setCartItems(
-          cartItems.map((x) =>
+          user.cart.map((x) =>
             x._id === product._id ? { ...exist, qty: exist.qty + value } : x
           )
         );
       } else {
         for (let x = 1; x <= value; x++) {
-          setCartItems(() => [...cartItems, { ...product, qty: value }]);
+          setuser.cart(() => [...user.cart, { ...product, qty: value }]);
         }
       }
     } else {

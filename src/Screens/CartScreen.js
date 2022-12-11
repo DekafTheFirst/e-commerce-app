@@ -17,8 +17,7 @@ import { FirebaseContext } from "../../Services/Firebase/firebase.context";
 import LoginScreen from "./LoginScreen";
 import { useEffect } from "react";
 function CartScreen() {
-  const { isAuthenticated, cartItems, cartTotal, numOfCartItems } =
-    useContext(FirebaseContext);
+  const { cartTotal, numOfCartItems } = useContext(FirebaseContext);
   const navigation = useNavigation();
   function shippingHandler() {
     navigation.navigate("Shipping");
@@ -26,7 +25,7 @@ function CartScreen() {
 
   return (
     <>
-      {cartItems.length > 0 ? (
+      {numOfCartItems > 0 ? (
         <>
           <Center w="full" py={5} bg={Colors.white}>
             <Text color={Colors.black} fontSize={20} bold>

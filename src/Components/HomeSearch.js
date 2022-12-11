@@ -7,7 +7,7 @@ import { FirebaseContext } from "../../Services/Firebase/firebase.context";
 
 export default function HomeSearch() {
   const navigation = useNavigation();
-  const { cartItems, numOfCartItems } = useContext(FirebaseContext);
+  const { numOfCartItems } = useContext(FirebaseContext);
   const navCart = () => {
     navigation.navigate("Cart");
   };
