@@ -11,47 +11,30 @@ export const FirebaseContext = createContext();
 export const FirebaseContextProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [userDataIsLoading, setUserDataIsLoading] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const [isLoggedOut, setIsLoggedOut] = useState(false);
   const [user, setUser] = useState(null);
 
   const userAvailableRef = useRef(false);
 
-  useEffect(() => {
-    console.log(userDataIsLoading);
-  }, [userDataIsLoading]);
-
   const [loginError, setLoginError] = useState(null);
   const [registerError, setRegisterError] = useState(null);
   const [products, setProducts] = useState([]);
-  const [cartItems, setCartItems] = useState([]);
+
   const taxRate = 20;
-
-  let cartTotal = 0;
-  if (cartItems.length > 0) {
-    cartItems.forEach((item) => {
-      const itemPricePlusTax = item.price + item.price / taxRate;
-      cartTotal += itemPricePlusTax * item.qty;
-    });
-  }
-
-  let numOfCartItems = 0;
-  if (cartItems.length > 0) {
-    cartItems.map((item) => {
-      numOfCartItems += item.qty;
-    });
-  } else {
-    numOfCartItems = 0;
-  }
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       setIsLoading(true);
       if (user) {
         setUser(user);
+        getUserData(user);
 
+        setIsLoggedIn(true);
         setIsLoading(false);
       } else {
+        setIsLoggedIn(false);
         setIsLoading(false);
         setIsLoggedOut(true);
       }
@@ -64,6 +47,7 @@ export const FirebaseContextProvider = ({ children }) => {
       .then((u) => {
         setUser(u);
         setIsLoading(false);
+        setIsLoggedIn(true);
       })
       .catch((e) => {
         setIsLoading(false);
@@ -72,8 +56,8 @@ export const FirebaseContextProvider = ({ children }) => {
   };
 
   const onLogout = () => {
-    setUser("being logged out");
     setIsLoggedOut(true);
+    setUser(null);
     signOut(auth);
   };
 
@@ -98,30 +82,36 @@ export const FirebaseContextProvider = ({ children }) => {
       });
   };
 
-  useEffect(() => {
-    const getUserData = async () => {
-      console.log("rn user is: ", user);
-      if (!userAvailableRef.current && user) {
-        setUserDataIsLoading(true);
-        userAvailableRef.current = true;
-        try {
-          const userData = await getDoc(doc(db, "users", user.uid))
-            .then((userData) => {
-              setUser({ ...user, data: userData.data() });
-            })
-            .catch((e) => {
-              console.log(e);
-            });
-          setUserDataIsLoading(false);
-        } catch (error) {
-          setUserDataIsLoading(false);
-          console.log(error);
+  let cartTotal = 0;
+  let numOfCartItems = 0;
+
+  const getUserData = async (user) => {
+    setUserDataIsLoading(true);
+
+    const userData = await getDoc(doc(db, "users", user.uid))
+      .then((userData) => {
+        setUser({ ...user, ...userData.data() });
+
+        if (user.cart.length > 0) {
+          user.cart.forEach((item) => {
+            const itemPricePlusTax = item.price + item.price / taxRate;
+            cartTotal += itemPricePlusTax * item.qty;
+          });
+        }
+
+        if (cartItems.length > 0) {
+          cartItems.map((item) => {
+            numOfCartItems += item.qty;
+          });
+        } else {
+          numOfCartItems = 0;
         }
         setUserDataIsLoading(false);
-      }
-    };
-    getUserData();
-  }, [user]);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   const getProducts = async () => {
     setIsLoading(true);
@@ -161,11 +151,9 @@ export const FirebaseContextProvider = ({ children }) => {
         onRegister,
         onLogout,
         products,
-        cartItems,
         cartTotal,
         numOfCartItems,
         taxRate,
-        setCartItems,
       }}
     >
       {children}

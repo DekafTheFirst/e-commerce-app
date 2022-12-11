@@ -14,7 +14,7 @@ export default function Profile() {
     {
       label: "USERNAME",
       type: "text",
-      defaultValue: user.data.displayName,
+      defaultValue: user.displayName,
     },
     { label: "EMAIL", type: "text", defaultValue: user.email },
     { label: "NEW PASSWORD", type: "password", defaultValue: user.password },

@@ -23,7 +23,10 @@ const ProfileNav = () => {
       }}
     >
       <Stack.Screen name="NotVerified" component={NotVerifyScreen} />
-      <Stack.Screen name="Profile" component={ProfileScreen} />
+      <Stack.Screen
+        name="Profile"
+        component={isAuthenticated ? ProfileScreen : NotVerifyScreen}
+      />
 
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Register" component={RegisterScreen} />
