@@ -1,5 +1,12 @@
 import { onAuthStateChanged, signOut, updateProfile } from "firebase/auth";
-import { collection, doc, getDoc, getDocs, setDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 import React, { useState, createContext, useEffect } from "react";
 import { useRef } from "react";
 import { auth, db } from "./firebase.service";
@@ -48,6 +55,7 @@ export const FirebaseContextProvider = ({ children }) => {
       setIsLoading(true);
       if (user) {
         setUser(user);
+
         getUserData(user);
 
         setIsLoggedIn(true);
@@ -109,9 +117,11 @@ export const FirebaseContextProvider = ({ children }) => {
     const userData = await getDoc(doc(db, "users", user.uid))
       .then((userData) => {
         setUser({ ...user, ...userData.data() });
-
         setUserDataIsLoading(false);
+        const userCart = userData.data().cart;
+        setCartItems(userCart);
       })
+
       .catch((e) => {
         console.log(e);
       });
