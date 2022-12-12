@@ -21,8 +21,27 @@ export const FirebaseContextProvider = ({ children }) => {
   const [loginError, setLoginError] = useState(null);
   const [registerError, setRegisterError] = useState(null);
   const [products, setProducts] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
 
   const taxRate = 20;
+
+  let cartTotal = 0;
+  let numOfCartItems = 0;
+
+  if (cartItems.length > 0) {
+    cartItems.forEach((item) => {
+      const itemPricePlusTax = item.price + item.price / taxRate;
+      cartTotal += itemPricePlusTax * item.qty;
+    });
+  }
+
+  if (cartItems.length > 0) {
+    cartItems.map((item) => {
+      numOfCartItems += item.qty;
+    });
+  } else {
+    numOfCartItems = 0;
+  }
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -84,9 +103,6 @@ export const FirebaseContextProvider = ({ children }) => {
       });
   };
 
-  let cartTotal = 0;
-  let numOfCartItems = 0;
-
   const getUserData = async (user) => {
     setUserDataIsLoading(true);
 
@@ -94,20 +110,6 @@ export const FirebaseContextProvider = ({ children }) => {
       .then((userData) => {
         setUser({ ...user, ...userData.data() });
 
-        if (user.cart.length > 0) {
-          user.cart.forEach((item) => {
-            const itemPricePlusTax = item.price + item.price / taxRate;
-            cartTotal += itemPricePlusTax * item.qty;
-          });
-        }
-
-        if (user.cart.length > 0) {
-          user.cart.map((item) => {
-            numOfCartItems += item.qty;
-          });
-        } else {
-          numOfCartItems = 0;
-        }
         setUserDataIsLoading(false);
       })
       .catch((e) => {
@@ -153,6 +155,8 @@ export const FirebaseContextProvider = ({ children }) => {
         onRegister,
         onLogout,
         products,
+        cartItems,
+        setCartItems,
         cartTotal,
         numOfCartItems,
         taxRate,

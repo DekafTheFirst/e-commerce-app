@@ -19,14 +19,14 @@ import { useNavigation } from "@react-navigation/native";
 import { useEffect } from "react";
 
 export default function CartItems() {
-  const { user, setUser, products } = useContext(FirebaseContext);
+  const { cartItems, setCartItems, products } = useContext(FirebaseContext);
   const navigation = useNavigation();
 
   useEffect(() => {
     console.log(user.cart);
   }, [user.cart]);
   function onAddQuantity(thisItem) {
-    setUser(
+    setCartItems(
       user.cart.map((x) =>
         x._id === thisItem._id ? { ...thisItem, qty: thisItem.qty + 1 } : x
       )
@@ -35,7 +35,7 @@ export default function CartItems() {
 
   function onReduceQuantity(thisItem) {
     if (thisItem.qty > 1) {
-      setUser(
+      setCartItems(
         user.cart.map((x) =>
           x._id === thisItem._id ? { ...thisItem, qty: thisItem.qty + 1 } : x
         )
