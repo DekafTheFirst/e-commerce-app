@@ -41,6 +41,8 @@ export const FirebaseContextProvider = ({ children }) => {
     });
   }, [auth]);
 
+  useEffect(() => {});
+
   const onLogin = (email, password) => {
     setIsLoading(true);
     loginRequest(email, password)
@@ -99,8 +101,8 @@ export const FirebaseContextProvider = ({ children }) => {
           });
         }
 
-        if (cartItems.length > 0) {
-          cartItems.map((item) => {
+        if (user.cart.length > 0) {
+          user.cart.map((item) => {
             numOfCartItems += item.qty;
           });
         } else {
