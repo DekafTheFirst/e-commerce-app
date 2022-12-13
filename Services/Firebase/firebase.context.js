@@ -123,9 +123,10 @@ export const FirebaseContextProvider = ({ children }) => {
       //   }
       // );
 
-      // const userData = onSnapshot(doc(db, "users", user.uid), (userData) => {
-      //   console.log(userData.data().cart);
-      // });
+      const userData = onSnapshot(doc(db, "users", user.uid), (userData) => {
+        console.log(userData.data().cart);
+        setCartItems(userData.data().cart);
+      });
 
       try {
         await updateDoc(doc(db, "users", user.uid), {
