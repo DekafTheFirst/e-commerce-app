@@ -135,7 +135,6 @@ export const FirebaseContextProvider = ({ children }) => {
           querySnapshot.forEach((doc) => {
             setProducts((arr) => [...arr, doc.data()]);
           });
-          setIsLoading(false);
         }
       );
     } catch (error) {

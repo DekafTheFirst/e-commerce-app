@@ -25,15 +25,10 @@ export default function HomeProducts() {
   function navProduct(product) {
     navigation.navigate("Single", product);
   }
-
+  // console.log(isLoading ? "isLoading" : "isn't loading", products[0]);
   return (
     <View flex={1}>
-      <Flex
-        flexWrap="wrap"
-        direction="row"
-        justifyContent="space-between"
-        px={6}
-      >
+      <Flex>
         {isLoading ? (
           <Box safeAreaTop flex={1}>
             <Center height="full">
@@ -42,7 +37,14 @@ export default function HomeProducts() {
           </Box>
         ) : (
           <FlatList
-            flex={1}
+            numColumns={2}
+            columnWrapperStyle={{
+              justifyContent: "space-between",
+            }}
+            px={6}
+            pt={2}
+            mb={7}
+            contentContainerStyle={{}}
             data={products}
             renderItem={({ item }) => {
               console.log(item);
