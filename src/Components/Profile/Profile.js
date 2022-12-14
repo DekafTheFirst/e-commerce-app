@@ -25,9 +25,7 @@ export default function Profile() {
     },
   ];
 
-  function updateProfile() {
-    console.log(user);
-  }
+  function updateProfile() {}
 
   return (
     <Box h="full" bg={Colors.white} px={5}>
