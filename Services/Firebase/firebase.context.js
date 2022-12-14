@@ -1,11 +1,9 @@
 import { onAuthStateChanged, signOut, updateProfile } from "firebase/auth";
 import {
-  addDoc,
   collection,
   doc,
   getDoc,
   getDocs,
-  onSnapshot,
   setDoc,
   updateDoc,
 } from "firebase/firestore";
@@ -59,7 +57,6 @@ export const FirebaseContextProvider = ({ children }) => {
         setUser(user);
 
         getUserData(user);
-        handleCartData();
 
         setIsLoggedIn(true);
         setIsLoading(false);
@@ -108,40 +105,11 @@ export const FirebaseContextProvider = ({ children }) => {
         };
         // Add user account information in Firestore to be retrieved later.
         setDoc(doc(db, "users", res.user.uid), userInfo);
-        // addDoc(doc(db, "carts", res.user.uid), []);
       })
       .catch((e) => {
         console.log(e);
       });
   };
-
-  const handleCartData = async () => {
-    if (user) {
-      // const userData = await getDoc(doc(db, "users", user.uid)).then(
-      //   (userData) => {
-      //     setUser({ ...user, cart: userData.data().cart });
-      //   }
-      // );
-
-      const userData = onSnapshot(doc(db, "users", user.uid), (userData) => {
-        console.log(userData.data().cart);
-        setCartItems(userData.data().cart);
-      });
-
-      try {
-        await updateDoc(doc(db, "users", user.uid), {
-          cart: cartItems,
-        });
-        console.log("cart object updated successfully");
-      } catch (e) {
-        console.log(e);
-      }
-    }
-  };
-
-  useEffect(() => {
-    handleCartData();
-  }, [cartItems]);
 
   const getUserData = async (user) => {
     setUserDataIsLoading(true);
@@ -149,8 +117,9 @@ export const FirebaseContextProvider = ({ children }) => {
     const userData = await getDoc(doc(db, "users", user.uid))
       .then((userData) => {
         setUser({ ...user, ...userData.data() });
-        setCartItems(userData.data().cart);
         setUserDataIsLoading(false);
+        const userCart = userData.data().cart;
+        setCartItems(userCart);
       })
 
       .catch((e) => {

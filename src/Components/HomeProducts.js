@@ -47,6 +47,7 @@ export default function HomeProducts() {
             contentContainerStyle={{}}
             data={products}
             renderItem={({ item }) => {
+              console.log(item);
               return (
                 <Pressable
                   key={item._id}
