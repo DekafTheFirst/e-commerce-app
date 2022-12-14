@@ -19,7 +19,8 @@ import { useNavigation } from "@react-navigation/native";
 import { useEffect } from "react";
 
 export default function CartItems() {
-  const { cartItems, setCartItems, products } = useContext(FirebaseContext);
+  const { user, cartItems, setCartItems, products } =
+    useContext(FirebaseContext);
   const navigation = useNavigation();
 
   function onAddQuantity(thisItem) {

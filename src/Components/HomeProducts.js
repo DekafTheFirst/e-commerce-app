@@ -8,6 +8,7 @@ import {
   Box,
   Heading,
   Center,
+  FlatList,
 } from "native-base";
 import React, { useContext } from "react";
 
@@ -24,55 +25,67 @@ export default function HomeProducts() {
   function navProduct(product) {
     navigation.navigate("Single", product);
   }
-
+  // console.log(isLoading ? "isLoading" : "isn't loading", products[0]);
   return (
-    <ScrollView flex={1} showsVerticalScrollIndicator={false}>
-      <Flex
-        flexWrap="wrap"
-        direction="row"
-        justifyContent="space-between"
-        px={6}
-      >
-        {isLoading && (
-          <Center>
-            <ActivityIndicator />
-          </Center>
-        )}
-        {products.map((product) => (
-          <Pressable
-            key={product._id}
-            onPress={() => navProduct(product)}
-            w="47%"
-            bg={Colors.white}
-            rounded="md"
-            shadow={2}
-            pt={0}
-            my={3}
-            pb={2}
-            overflow="hidden"
-          >
-            <Center>
-              <Image
-                source={{ uri: product.image }}
-                alt={product.name}
-                w="90%"
-                h={24}
-                resizeMode="contain"
-              />
+    <View flex={1}>
+      <Flex>
+        {isLoading ? (
+          <Box safeAreaTop flex={1}>
+            <Center height="full">
+              <ActivityIndicator />
             </Center>
+          </Box>
+        ) : (
+          <FlatList
+            numColumns={2}
+            columnWrapperStyle={{
+              justifyContent: "space-between",
+            }}
+            px={6}
+            pt={2}
+            mb={7}
+            contentContainerStyle={{}}
+            data={products}
+            renderItem={({ item }) => {
+              console.log(item);
+              return (
+                <Pressable
+                  key={item._id}
+                  onPress={() => navProduct(item)}
+                  w="47%"
+                  bg={Colors.white}
+                  rounded="md"
+                  shadow={2}
+                  pt={0}
+                  my={3}
+                  pb={2}
+                  overflow="hidden"
+                >
+                  <Center>
+                    <Image
+                      source={{ uri: item.image }}
+                      alt={item.name}
+                      w="90%"
+                      h={24}
+                      resizeMode="contain"
+                    />
+                  </Center>
 
-            <Box px={4} pt={1}>
-              <Heading size="sm" bold>
-                ₱{product.price}
-              </Heading>
-              <Text fontSize={11} mt={1} isTruncated>
-                {product.name}
-              </Text>
-              <Rating value={product.rating} />
-            </Box>
-          </Pressable>
-        ))}
+                  <Box px={4} pt={1}>
+                    <Heading size="sm" bold>
+                      ₱{item.price}
+                    </Heading>
+                    <Text fontSize={11} mt={1} isTruncated>
+                      {item.name}
+                    </Text>
+                    <Rating value={item.rating} />
+                  </Box>
+                </Pressable>
+              );
+            }}
+          />
+        )}
       </Flex>
-    </ScrollView>
+    </View>
   );
 }
